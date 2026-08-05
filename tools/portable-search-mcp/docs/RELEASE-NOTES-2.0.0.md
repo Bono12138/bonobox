@@ -1,6 +1,6 @@
 # Portable Search MCP 2.0.0
 
-The first tool published in `bono-tools`.
+The first tool published in **BonoBox (BBX)**.
 
 ## What it does
 
@@ -18,7 +18,7 @@ Download `portable-search-mcp-v2.0.0.zip`, extract it, and run:
 .\verify.ps1 -Live
 ```
 
-See [QUICKSTART.md](https://github.com/Bono12138/bono-tools/blob/main/tools/portable-search-mcp/QUICKSTART.md) for MCP configuration and the observable success checks.
+See [QUICKSTART.md](https://github.com/Bono12138/bonobox/blob/main/tools/portable-search-mcp/QUICKSTART.md) for MCP configuration and the observable success checks.
 
 ## Verification
 
