@@ -27,7 +27,7 @@
 
 | 工具 | 解决的问题 | 实测表现 | 状态 |
 |---|---|---|---|
-| [Portable Search MCP](tools/portable-search-mcp/) | 给支持 MCP 的本地模型、Agent、IDE 和自动化流程增加公开网页、新闻和图片搜索 | 33 次实时请求成功 31 次；网页/图片 27/27 次有结果；P50 2.244 秒 | v2.0.1 · 已发布 |
+| [Portable Search MCP](tools/portable-search-mcp/) | 给支持 MCP 的本地模型、Agent、IDE 和自动化流程增加公开网页、新闻和图片搜索 | 90/90 请求成功；网页/图片 66/66、新闻 24/24 轮有结果；P50 2.537 秒 | v2.1.0 · 已发布 |
 
 ## 第一件工具：Portable Search MCP
 
@@ -39,27 +39,27 @@
 
 不需要商业搜索 API Key，支持 Windows 一键安装、自检和 Agent 辅助安装。
 
-### 它到底搜得怎么样
+### 实际搜索表现
 
-2026-08-05 在 Windows、Python 3.13.3、`ddgs 9.14.4` 环境运行 11 组查询、每组 3 轮，共 33 次公开网络请求：
+2026-08-05 在 Windows、Python 3.13.3、`ddgs 9.14.4` 环境运行 30 组查询、每组 3 轮，共 90 次公开网络请求：
 
 | 指标 | 实测结果 | 怎么理解 |
 |---|---:|---|
-| 请求成功率 | **31/33（93.9%）** | 2 次中文新闻请求在重试后仍遇到上游临时不可用 |
-| 网页/图片有结果率 | **27/27（100%）** | 9 组网页与图片查询每轮都返回结果 |
+| 请求成功率 | **90/90（100%）** | 三轮均未出现最终请求失败 |
+| 网页/图片有结果率 | **66/66（100%）** | 18 组网页、4 组图片查询均返回结果 |
 | 返回链接有效率 | **100%** | 本次返回的链接均为 HTTP(S) 公网 URL |
-| 普通语句找指定官网 | **4/9（44.4%）** | 免费后端的自然排序不稳定，不能当精确导航器 |
-| 使用 `site:` 限定官网 | **9/9（100%）** | 指定来源后，目标域名每次进入前 5 |
-| 当天新闻有结果率 | **3/6（50%）** | 工具宁可返回空结果，也不拿旧闻冒充当天新闻 |
-| 响应时间 | **P50 2.244 秒；P95 4.618 秒** | 当前网络条件下，多数查询约 2 秒，慢请求约 5–10 秒 |
+| 普通语句找指定官网 | **16/18（88.9%）** | 目标域名进入前 5；两次漏检均为人民银行官网 |
+| 使用 `site:` 限定官网 | **18/18（100%）** | 目标域名每次排在第 1 位 |
+| 新闻有结果率 | **24/24（100%）** | 每条新闻都有可解析日期并通过时间窗口检查 |
+| 响应时间 | **P50 2.537 秒；P95 9.055 秒** | 多数查询约 2–3 秒，少量免费网页后端请求仍较慢 |
 
-这组结果说明：它适合给 Agent 快速扩展公开信息候选来源，也适合用 `site:`、时间范围和明确关键词做定向检索；它不适合承诺固定排序、持续 100% 可用或分钟级新闻覆盖。
+当前版本适合为 Agent 扩展公开信息候选来源，也适合使用 `site:`、时间范围和明确关键词做定向检索。普通语句官网导航仍可能漏掉目标域名；需要确定来源时必须写明域名。免费后端不提供固定排序、持续可用或分钟级新闻保证。
 
-完整方法、逐轮匿名化指标和复跑脚本见[测试报告](tools/portable-search-mcp/docs/TEST-REPORT.md)与[原始基准数据](tools/portable-search-mcp/docs/benchmark-2026-08-05.json)。
+完整方法、逐轮匿名化指标、优化前后对比和复跑脚本见[测试报告](tools/portable-search-mcp/docs/TEST-REPORT.md)与[最终基准数据](tools/portable-search-mcp/docs/benchmark-2026-08-05-v3.json)。
 
 ### 下载和安装
 
-从 [Portable Search MCP v2.0.1 Release](https://github.com/Bono12138/bonobox/releases/tag/portable-search-mcp-v2.0.1) 下载 `portable-search-mcp-v2.0.1.zip`，解压后在 PowerShell 运行：
+从 [Portable Search MCP v2.1.0 Release](https://github.com/Bono12138/bonobox/releases/tag/portable-search-mcp-v2.1.0) 下载 `portable-search-mcp-v2.1.0.zip`，解压后在 PowerShell 运行：
 
 ```powershell
 .\install.ps1
@@ -81,27 +81,13 @@ PASS live_search valid_results=...
 把 ZIP 发给自己的 Agent，并复制：
 
 ```text
-请解压 portable-search-mcp-v2.0.1.zip，先完整阅读 QUICKSTART.md，再按文档完成 Windows 安装和 MCP 配置。
+请解压 portable-search-mcp-v2.1.0.zip，先完整阅读 QUICKSTART.md，再按文档完成 Windows 安装和 MCP 配置。
 安装后运行 .\verify.ps1 -Live。
 最后只告诉我：安装目录；configuration、protocol、live_search 是否 PASS；工具列表中是否出现 search_web、search_news、search_images。
 不要输出或上传账号、令牌、Cookie、本机隐私路径、mcp-config.local.json 或敏感搜索词。
 ```
 
 完整使用说明、适用场景、提示词、测试证据和局限见[工具文档](tools/portable-search-mcp/README.md)。
-
-## BB 箱子的发布标准
-
-每件工具正式进入 BonoBox 前，至少满足：
-
-1. 解决一个能说清楚的实际问题；
-2. 五分钟内能找到下载、安装和第一次使用方法；
-3. 有手动操作路径，适合时也提供 Agent 辅助路径；
-4. 有自动化测试，必要时增加真实环境与表现测试；
-5. 写明成功标准、已知限制和不能使用的场景；
-6. 发布包采用白名单构建，不包含凭据、本机配置、缓存和敏感数据；
-7. 每次发布有独立版本、变更说明和可下载产物。
-
-品牌与视觉使用规则见 [BonoBox Brand Guide](docs/BRAND-GUIDE.md)。
 
 ## 更新与反馈
 

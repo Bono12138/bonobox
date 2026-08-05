@@ -30,6 +30,7 @@ PACKAGE_FILES = [
     "docs/TEST-REPORT.md",
     "docs/TROUBLESHOOTING.md",
     "docs/benchmark-2026-08-05.json",
+    "docs/benchmark-2026-08-05-v3.json",
     "scripts/benchmark_search.py",
     "search_mcp/__init__.py",
     "search_mcp/search.py",
