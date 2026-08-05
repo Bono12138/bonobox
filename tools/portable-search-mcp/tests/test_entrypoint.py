@@ -1,4 +1,5 @@
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -40,3 +41,27 @@ def test_legacy_entrypoint_runs_the_hardened_server():
         "search_images",
     ]
     assert completed.stderr == ""
+
+
+def test_entrypoint_uses_utf8_when_windows_default_stdio_is_not_utf8():
+    project_root = Path(__file__).resolve().parents[1]
+    environment = os.environ.copy()
+    environment["PYTHONIOENCODING"] = "cp936"
+    request = json.dumps(
+        {"jsonrpc": "2.0", "id": "中文请求", "method": "ping", "params": {}},
+        ensure_ascii=False,
+    )
+
+    completed = subprocess.run(
+        [sys.executable, str(project_root / "ddgs-mcp-server.py")],
+        input=request + "\n",
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        timeout=10,
+        check=True,
+        cwd=project_root,
+        env=environment,
+    )
+
+    assert json.loads(completed.stdout)["id"] == "中文请求"
