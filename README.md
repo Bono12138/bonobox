@@ -61,6 +61,14 @@
 
 从 [Portable Search MCP v2.1.0 Release](https://github.com/Bono12138/bonobox/releases/tag/portable-search-mcp-v2.1.0) 下载 `portable-search-mcp-v2.1.0.zip`，解压后在 PowerShell 运行：
 
+部分浏览器会对刚发布、下载量较少的 ZIP 显示安全提醒。请从上述 Release 页面的 **Assets** 下载，并核对 SHA-256：
+
+```text
+8aa427aa0455b91069a802a2ee2d7151b5f0bafc8848435abf91131da2c3eb11
+```
+
+文件名和哈希均一致时，可以在下载记录中选择“保留”。不要关闭安全浏览或公司防护策略；信息不一致时请取消下载并提交 Issue。
+
 ```powershell
 .\install.ps1
 .\verify.ps1 -Live
