@@ -16,17 +16,17 @@ If a tool saves you time, star the repository to follow future releases.
 
 | Tool | Problem solved | Measured result | Status |
 |---|---|---|---|
-| [Portable Search MCP](tools/portable-search-mcp/) | Adds public web, news, and image search to MCP-compatible agents and local models | 31/33 live requests succeeded; web/image returned results in 27/27 runs; median latency 2.244 s | v2.0.1 · released |
+| [Portable Search MCP](tools/portable-search-mcp/) | Adds public web, news, and image search to MCP-compatible agents and local models | 90/90 requests succeeded; web/image returned results in 66/66 runs and news in 24/24; P50 latency 2.537 s | v2.1.0 · released |
 
 ## Portable Search MCP
 
 The tool exposes `search_web`, `search_news`, and `search_images` through MCP without requiring a commercial search API key.
 
-In a 33-request live benchmark on 2026-08-05, 93.9% of requests succeeded, every web/image run returned results, every returned URL was a public HTTP(S) URL, and latency was 2.244 s at P50 and 4.618 s at P95. Plain-language navigational queries placed the intended official domain in the top five in 4/9 runs; adding an explicit `site:` constraint improved that to 9/9. Fresh-news queries produced same-day results in 3/6 runs because stale or unverifiable items are deliberately removed.
+In a 90-request live benchmark on 2026-08-05, all requests completed successfully, web/image searches returned results in 66/66 runs, and news searches returned dated results in 24/24 runs. Plain-language navigational queries placed the intended official domain in the top five in 16/18 runs; explicit `site:` queries placed it first in 18/18. All returned URLs were valid and unique within each response. Latency was 2.537 s at P50 and 9.055 s at P95.
 
-See the [full test report](tools/portable-search-mcp/docs/TEST-REPORT.md) and [benchmark data](tools/portable-search-mcp/docs/benchmark-2026-08-05.json).
+See the [full test report](tools/portable-search-mcp/docs/TEST-REPORT.md) and [final benchmark data](tools/portable-search-mcp/docs/benchmark-2026-08-05-v3.json).
 
-Download [Portable Search MCP v2.0.1](https://github.com/Bono12138/bonobox/releases/tag/portable-search-mcp-v2.0.1), extract the ZIP, and run:
+Download [Portable Search MCP v2.1.0](https://github.com/Bono12138/bonobox/releases/tag/portable-search-mcp-v2.1.0), extract the ZIP, and run:
 
 ```powershell
 .\install.ps1
@@ -34,10 +34,6 @@ Download [Portable Search MCP v2.0.1](https://github.com/Bono12138/bonobox/relea
 ```
 
 The release includes Windows setup, locked dependencies, protocol checks, live verification, security notes, troubleshooting, and a per-file hash manifest. See the [full tool documentation](tools/portable-search-mcp/README.md).
-
-## Release bar
-
-Every published tool must solve a concrete problem, offer a short first-use path, define observable success, include relevant tests, document limitations, and ship from an allowlisted build without local state or secrets.
 
 Use [Issues](https://github.com/Bono12138/bonobox/issues) for reproducible problems and tool ideas, [Discussions](https://github.com/Bono12138/bonobox/discussions) for general questions, and [SECURITY.md](SECURITY.md) for private security reports.
 

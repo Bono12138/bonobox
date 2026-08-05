@@ -287,6 +287,233 @@ def test_transient_failure_is_retried_once():
     assert len(client.calls) == 2
 
 
+def test_official_website_search_overfetches_and_reranks_exact_entity_title():
+    client = FakeClient(
+        [
+            [
+                {
+                    "title": "中国人民银行令（2020 年）",
+                    "href": "https://www.gov.cn/policy",
+                },
+                {
+                    "title": "中国人民银行",
+                    "href": "https://www.pbc.gov.cn/",
+                },
+                {
+                    "title": "中国人民银行介绍",
+                    "href": "https://example.com/pbc",
+                },
+            ]
+        ]
+    )
+    service = SearchService(client_factory=lambda: client, retry_delay_seconds=0)
+
+    results = service.search(
+        "web", "中国人民银行 官方网站", max_results=2, region="cn-zh", timelimit=None
+    )
+
+    assert client.calls[0][2]["max_results"] == 10
+    assert results[0]["url"] == "https://www.pbc.gov.cn/"
+    assert len(results) == 2
+
+
+def test_chinese_official_website_search_uses_fallback_when_primary_has_no_confident_match():
+    client = FakeClient(
+        [
+            [{"title": "中国人民银行", "href": "https://zh.wikipedia.org/wiki/PBC"}],
+            [{"title": "中国人民银行", "href": "https://www.pbc.gov.cn/"}],
+        ]
+    )
+    service = SearchService(client_factory=lambda: client, retry_delay_seconds=0)
+
+    results = service.search(
+        "web", "中国人民银行 官方网站", max_results=3, region="cn-zh", timelimit=None
+    )
+
+    assert [call[1] for call in client.calls] == [
+        "中国人民银行 官方",
+        "site:gov.cn 中国人民银行",
+    ]
+    assert results[0]["url"] == "https://www.pbc.gov.cn/"
+
+
+def test_english_official_documentation_search_uses_simplified_fallback_query():
+    client = FakeClient(
+        [
+            [{"title": "Tutorial", "href": "https://example.com/tutorial"}],
+            [
+                {
+                    "title": "Python 3.13 Documentation",
+                    "href": "https://docs.python.org/3.13/",
+                }
+            ],
+        ]
+    )
+    service = SearchService(client_factory=lambda: client, retry_delay_seconds=0)
+
+    results = service.search(
+        "web",
+        "Python 3.13 official documentation",
+        max_results=3,
+        region="us-en",
+        timelimit=None,
+    )
+
+    assert [call[1] for call in client.calls] == [
+        "Python 3.13 documentation",
+        "Python 3.13 official documentation",
+    ]
+    assert results[0]["url"] == "https://docs.python.org/3.13/"
+
+
+def test_news_search_uses_all_supported_backends_and_larger_candidate_pool():
+    client = FakeClient(
+        [
+            [
+                {
+                    "title": "Today",
+                    "url": "https://example.com/today",
+                    "date": "2026-08-05T02:30:00+00:00",
+                }
+            ]
+        ]
+    )
+    service = SearchService(
+        client_factory=lambda: client,
+        retry_delay_seconds=0,
+        now_factory=lambda: datetime(2026, 8, 5, 3, 0, tzinfo=timezone.utc),
+    )
+
+    service.search("news", "topic", max_results=3, region="wt-wt", timelimit="d")
+
+    assert client.calls[0][2]["backend"] == "bing,duckduckgo,yahoo"
+    assert client.calls[0][2]["max_results"] == 20
+
+
+def test_empty_filtered_news_is_retried_before_returning_empty():
+    client = FakeClient(
+        [
+            [
+                {
+                    "title": "Yesterday",
+                    "url": "https://example.com/yesterday",
+                    "date": "2026-08-04T02:30:00+00:00",
+                }
+            ],
+            [
+                {
+                    "title": "Today",
+                    "url": "https://example.com/today",
+                    "date": "2026-08-05T02:30:00+00:00",
+                }
+            ],
+        ]
+    )
+    service = SearchService(
+        client_factory=lambda: client,
+        news_fallback=lambda *args: [],
+        retries=1,
+        retry_delay_seconds=0,
+        now_factory=lambda: datetime(2026, 8, 5, 3, 0, tzinfo=timezone.utc),
+    )
+
+    results = service.search(
+        "news", "topic", max_results=3, region="wt-wt", timelimit="d"
+    )
+
+    assert [item["title"] for item in results] == ["Today"]
+    assert len(client.calls) == 2
+
+
+def test_chinese_news_retries_with_worldwide_region_after_provider_failure():
+    client = FakeClient(
+        [
+            DDGSException("unsupported locale"),
+            [
+                {
+                    "title": "Today",
+                    "url": "https://example.com/today",
+                    "date": "2026-08-05T02:30:00+00:00",
+                }
+            ],
+        ]
+    )
+    service = SearchService(
+        client_factory=lambda: client,
+        news_fallback=lambda *args: [],
+        retries=2,
+        retry_delay_seconds=0,
+        now_factory=lambda: datetime(2026, 8, 5, 3, 0, tzinfo=timezone.utc),
+    )
+
+    results = service.search(
+        "news", "科技政策", max_results=3, region="cn-zh", timelimit="d"
+    )
+
+    assert [call[2]["region"] for call in client.calls] == ["cn-zh", "wt-wt"]
+    assert results[0]["title"] == "Today"
+
+
+def test_news_uses_rss_before_ddgs_when_rss_has_fresh_results():
+    client = FakeClient([])
+    fallback_calls = []
+
+    def news_fallback(query, region, timelimit, max_results):
+        fallback_calls.append((query, region, timelimit, max_results))
+        return [
+            {
+                "title": "Central bank update",
+                "url": "https://news.example.com/update",
+                "source": "Example News",
+                "date": "Wed, 05 Aug 2026 02:30:00 GMT",
+            }
+        ]
+
+    service = SearchService(
+        client_factory=lambda: client,
+        news_fallback=news_fallback,
+        retries=1,
+        retry_delay_seconds=0,
+        now_factory=lambda: datetime(2026, 8, 5, 3, 0, tzinfo=timezone.utc),
+    )
+
+    results = service.search(
+        "news", "central bank", max_results=3, region="wt-wt", timelimit="d"
+    )
+
+    assert fallback_calls == [("central bank", "wt-wt", "d", 20)]
+    assert client.calls == []
+    assert results[0]["source"] == "Example News"
+    assert results[0]["published_at"] == "2026-08-05T02:30:00+00:00"
+
+
+def test_news_uses_ddgs_when_rss_returns_no_results():
+    client = FakeClient(
+        [
+            [
+                {
+                    "title": "Today",
+                    "url": "https://example.com/today",
+                    "date": "2026-08-05T02:30:00+00:00",
+                }
+            ]
+        ]
+    )
+
+    service = SearchService(
+        client_factory=lambda: client,
+        news_fallback=lambda *args: [],
+        retry_delay_seconds=0,
+        now_factory=lambda: datetime(2026, 8, 5, 3, 0, tzinfo=timezone.utc),
+    )
+
+    results = service.search(
+        "news", "topic", max_results=3, region="wt-wt", timelimit="d"
+    )
+
+    assert results[0]["title"] == "Today"
+
+
 def test_exhausted_failures_raise_sanitized_error():
     client = FakeClient(
         [DDGSException("upstream included query text"), DDGSException("still unavailable")]
