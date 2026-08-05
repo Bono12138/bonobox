@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: General questions and usage sharing
+    url: https://github.com/Bono12138/bono-tools/discussions
+    about: Use Discussions for questions that are not reproducible bugs.
+  - name: Private security report
+    url: https://github.com/Bono12138/bono-tools/security/advisories/new
+    about: Do not disclose vulnerabilities or secrets in a public issue.

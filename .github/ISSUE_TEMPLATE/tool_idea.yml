@@ -1,0 +1,31 @@
+name: Tool idea
+description: Suggest a useful, maintainable, and safe public tool
+title: "[idea] "
+labels: [idea]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What recurring problem should this solve?
+      description: Describe the user, situation, and frequency.
+    validations:
+      required: true
+  - type: textarea
+    id: existing
+    attributes:
+      label: What is the simplest existing alternative?
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: What would a successful first version do?
+    validations:
+      required: true
+  - type: textarea
+    id: costs
+    attributes:
+      label: Maintenance, security, and data considerations
+      description: Dependencies, upgrades, permissions, data sensitivity, failure recovery, and eventual removal.
+    validations:
+      required: true
