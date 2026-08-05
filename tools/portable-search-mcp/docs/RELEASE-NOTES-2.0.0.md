@@ -18,7 +18,7 @@ Download `portable-search-mcp-v2.0.0.zip`, extract it, and run:
 .\verify.ps1 -Live
 ```
 
-See [QUICKSTART.md](../QUICKSTART.md) for MCP configuration and the observable success checks.
+See [QUICKSTART.md](https://github.com/Bono12138/bono-tools/blob/main/tools/portable-search-mcp/QUICKSTART.md) for MCP configuration and the observable success checks.
 
 ## Verification
 
