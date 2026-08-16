@@ -20,7 +20,7 @@ The automated suite covers:
 
 The exact local test count is recorded by the release workflow rather than frozen in this document.
 
-Before release, GitHub Actions must build the allowlisted ZIP, verify its SHA-256, extract it, run the verifier from the extracted package, install from that package, and verify the installed Skill on Python 3.10 and 3.13. A release is not ready while that workflow is failing.
+Before release, the dedicated Superset GitHub Actions workflow must build the allowlisted ZIP, verify its SHA-256, extract it, run the verifier from the extracted package, install from that package, and verify the installed Skill on Python 3.10 and 3.13. A release is not ready while that workflow is failing.
 
 ## Real-deployment evidence
 
