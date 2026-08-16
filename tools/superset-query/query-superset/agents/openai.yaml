@@ -1,0 +1,4 @@
+interface:
+  display_name: "Superset 只读查询"
+  short_description: "通过受支持的 Superset SQL Lab 执行有边界的只读查询"
+  default_prompt: "Use $query-superset to check compatibility, configure a supported Superset deployment, run a bounded read-only query, and explain the result and limits."
