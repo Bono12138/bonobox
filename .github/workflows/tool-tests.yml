@@ -4,10 +4,14 @@ on:
   push:
     paths:
       - "tools/portable-search-mcp/**"
+      - "tools/superset-query/**"
+      - ".github/ISSUE_TEMPLATE/superset_*.yml"
       - ".github/workflows/tool-tests.yml"
   pull_request:
     paths:
       - "tools/portable-search-mcp/**"
+      - "tools/superset-query/**"
+      - ".github/ISSUE_TEMPLATE/superset_*.yml"
       - ".github/workflows/tool-tests.yml"
 
 permissions:
@@ -32,3 +36,58 @@ jobs:
         run: python -m pytest -q
       - name: Build allowlisted release
         run: python -m scripts.build_release
+
+  superset-query:
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.13"]
+    defaults:
+      run:
+        working-directory: tools/superset-query
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: tools/superset-query/requirements.txt
+      - name: Install runtime dependency
+        run: python -m pip install -r requirements.txt
+      - name: Confirm selected Python version
+        shell: pwsh
+        run: |
+          $actual = python -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')"
+          if ($actual.Trim() -ne "${{ matrix.python-version }}") {
+            throw "Expected Python ${{ matrix.python-version }}, found $actual"
+          }
+      - name: Run query client tests
+        run: python query-superset/scripts/test_superset_query.py
+      - name: Audit public files
+        run: python scripts/public_audit.py
+      - name: Build allowlisted release
+        run: python scripts/build_release.py
+      - name: Verify checksum and extracted release
+        shell: pwsh
+        run: |
+          $zip = Get-ChildItem .\dist\*.zip | Select-Object -First 1
+          $checksumFile = Get-ChildItem .\dist\*.sha256 | Select-Object -First 1
+          $expected = (Get-Content $checksumFile.FullName).Split()[0].ToLowerInvariant()
+          $actual = (Get-FileHash $zip.FullName -Algorithm SHA256).Hash.ToLowerInvariant()
+          if ($actual -ne $expected) { throw "Release checksum mismatch." }
+          $extract = Join-Path $env:RUNNER_TEMP "superset-query-release"
+          Expand-Archive -Path $zip.FullName -DestinationPath $extract
+          $package = Get-ChildItem $extract -Directory | Select-Object -First 1
+          & (Join-Path $package.FullName "verify.ps1")
+          $target = Join-Path $env:RUNNER_TEMP "query-superset"
+          & (Join-Path $package.FullName "install.ps1") -Destination $target
+          & (Join-Path $package.FullName "verify.ps1") -SkillPath $target
+      - name: Upload release candidate
+        if: matrix.python-version == '3.13'
+        uses: actions/upload-artifact@v4
+        with:
+          name: superset-query-release-candidate
+          path: |
+            tools/superset-query/dist/*.zip
+            tools/superset-query/dist/*.sha256

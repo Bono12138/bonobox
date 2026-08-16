@@ -1,0 +1,87 @@
+name: Superset query bug
+description: Report an installation, configuration, doctor, or read-only query failure
+title: "[superset-query] "
+labels: [bug, superset-query]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not submit Superset URLs, usernames, passwords, cookies, tokens, private SQL, query results, customer data, local private paths, or internal screenshots. Reproduce with `SELECT 1` when possible.
+        Do not paste a raw manifest. Query IDs may also be sensitive; remove them unless a maintainer explicitly asks for one and you are allowed to share it.
+  - type: input
+    id: version
+    attributes:
+      label: Tool version
+      placeholder: 1.0.0-beta.1
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Windows, Python, and Superset versions
+      placeholder: Windows 11; Python 3.12; Superset version unknown
+    validations:
+      required: true
+  - type: dropdown
+    id: login
+    attributes:
+      label: Login type
+      options:
+        - Username/password form
+        - SSO or OAuth
+        - MFA or CAPTCHA
+        - API token
+        - Custom or unknown
+    validations:
+      required: true
+  - type: dropdown
+    id: browser_select_one
+    attributes:
+      label: Can SQL Lab run SELECT 1 in your browser?
+      options:
+        - "Yes"
+        - "No"
+        - "Not tested"
+    validations:
+      required: true
+  - type: dropdown
+    id: command
+    attributes:
+      label: Failing step
+      options:
+        - install.ps1
+        - unit tests
+        - configure
+        - auth
+        - status
+        - doctor
+        - run
+    validations:
+      required: true
+  - type: input
+    id: category
+    attributes:
+      label: Error category and HTTP status
+      description: Use the tool's category. Remove IDs and private details.
+      placeholder: auth; HTTP 403
+  - type: textarea
+    id: redacted_error
+    attributes:
+      label: Redacted error excerpt
+      description: Replace private values with `[redacted]` before submission.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Minimal reproduction
+      description: Use harmless synthetic SQL such as `SELECT 1`. Do not paste business SQL.
+    validations:
+      required: true
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Public-data check
+      options:
+        - label: I removed URLs, usernames, credentials, cookies, tokens, private SQL, results, customer data, local private paths, and internal screenshots.
+          required: true

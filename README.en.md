@@ -17,6 +17,7 @@ If a tool saves you time, star the repository to follow future releases.
 | Tool | Problem solved | Measured result | Status |
 |---|---|---|---|
 | [Portable Search MCP](tools/portable-search-mcp/) | Adds public web, news, and image search to MCP-compatible agents and local models | 90/90 requests succeeded; web/image returned results in 66/66 runs and news in 24/24; P50 latency 2.537 s | v2.1.0 · released |
+| [Superset Read-only Query Skill](tools/superset-query/) | Runs bounded SELECT queries through a user's existing Superset SQL Lab path | Automated tests cover common write rejection, result limits, CSV safety, session identity, and error classification; the legacy route has private maintainer validation | v1.0.0-beta.1 · public beta |
 
 ## Portable Search MCP
 
@@ -34,6 +35,12 @@ Download [Portable Search MCP v2.1.0](https://github.com/Bono12138/bonobox/relea
 ```
 
 The release includes Windows setup, locked dependencies, protocol checks, live verification, security notes, troubleshooting, and a per-file hash manifest. See the [full tool documentation](tools/portable-search-mcp/README.md).
+
+## Superset Read-only Query Skill
+
+This public beta keeps an Agent on the user's existing Superset SQL Lab path instead of opening a new direct database connection. It rejects common write and administration forms, protects local secrets with Windows DPAPI, binds cached sessions to the configured identity, classifies failures, applies a default 10,000-row result limit, and records run evidence. The validator is not a complete SQL parser; Superset and database permissions must enforce read-only access.
+
+The current release supports Windows, username/password form login, and the legacy synchronous SQL Lab endpoint. SSO, MFA, the modern API transport, and Power BI are not yet supported. See the [tool documentation](tools/superset-query/) for installation, a required live `SELECT 1` check, privacy boundaries, and compatibility feedback.
 
 Use [Issues](https://github.com/Bono12138/bonobox/issues) for reproducible problems and tool ideas, [Discussions](https://github.com/Bono12138/bonobox/discussions) for general questions, and [SECURITY.md](SECURITY.md) for private security reports.
 

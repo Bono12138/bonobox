@@ -28,6 +28,7 @@
 | 工具 | 解决的问题 | 实测表现 | 状态 |
 |---|---|---|---|
 | [Portable Search MCP](tools/portable-search-mcp/) | 给支持 MCP 的本地模型、Agent、IDE 和自动化流程增加公开网页、新闻和图片搜索 | 90/90 请求成功；网页/图片 66/66、新闻 24/24 轮有结果；P50 2.537 秒 | v2.1.0 · 已发布 |
+| [Superset 只读查询 Skill](tools/superset-query/) | 让 Agent 通过用户已有的 Superset SQL Lab 通道执行有边界的 SELECT 查询 | 自动测试覆盖常见写入拦截、结果上限、CSV 安全、会话身份和错误分类；旧版同步 SQL Lab 路线有维护者私下验证 | v1.0.0-beta.1 · 公开 Beta |
 
 ## 第一件工具：Portable Search MCP
 
@@ -96,6 +97,12 @@ PASS live_search valid_results=...
 ```
 
 完整使用说明、适用场景、提示词、测试证据和局限见[工具文档](tools/portable-search-mcp/README.md)。
+
+## 第二件工具：Superset 只读查询 Skill
+
+它不让 Agent 直接连接数据库，而是继续使用用户本人已有的 Superset SQL Lab 查询通道。公开 Beta 提供常见写入和管理形式拦截、Windows DPAPI 凭据保护、会话身份绑定、错误分类、默认 10,000 行结果上限和查询证据。本地检查不是完整 SQL 解析器，最终只读由 Superset 和底层数据库权限保证。
+
+当前版本只支持 Windows、用户名密码表单登录和旧版同步 SQL Lab 接口。SSO、MFA、新版 API 和 Power BI 尚未支持。下载、安装、真实 `SELECT 1` 验证、隐私边界和兼容性反馈见[工具文档](tools/superset-query/)；安装故障和适配需求也可以直接使用专用 Issue 模板。
 
 ## 更新与反馈
 

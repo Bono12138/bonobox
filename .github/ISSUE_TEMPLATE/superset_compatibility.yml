@@ -1,0 +1,59 @@
+name: Superset compatibility request
+description: Request support for another Superset login or API configuration
+title: "[superset-query compatibility] "
+labels: [enhancement, superset-query]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This public Beta currently supports Windows, username/password form login, and the legacy synchronous SQL Lab endpoint. Do not share internal URLs, screenshots, credentials, SQL, or data.
+  - type: input
+    id: environment
+    attributes:
+      label: Windows, Python, and Superset versions
+      placeholder: Windows 11; Python 3.12; Superset 6.1
+    validations:
+      required: true
+  - type: dropdown
+    id: login
+    attributes:
+      label: Login type to support
+      options:
+        - SSO or OAuth
+        - LDAP with a custom page
+        - MFA or CAPTCHA
+        - API token
+        - Username/password form with different behavior
+        - Other or unknown
+    validations:
+      required: true
+  - type: dropdown
+    id: transport
+    attributes:
+      label: Available SQL Lab transport
+      options:
+        - Legacy /superset/sql_json/
+        - Modern /api/v1/sqllab/execute/
+        - Both
+        - Unknown
+    validations:
+      required: true
+  - type: textarea
+    id: need
+    attributes:
+      label: What should work?
+      description: Describe the user action and expected result without internal names or data.
+    validations:
+      required: true
+  - type: textarea
+    id: testability
+    attributes:
+      label: Safe way to reproduce
+      description: State whether you can provide a local demo instance, synthetic fixture, or redacted protocol description. Never provide a real account.
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Public-data check
+      options:
+        - label: I removed organization names, internal URLs, usernames, credentials, cookies, tokens, SQL, results, customer data, and internal screenshots.
+          required: true
