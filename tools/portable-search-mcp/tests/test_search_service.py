@@ -74,7 +74,11 @@ def test_news_search_maps_url_and_source_fields():
             ]
         ]
     )
-    service = SearchService(client_factory=lambda: client, retry_delay_seconds=0)
+    service = SearchService(
+        client_factory=lambda: client,
+        retry_delay_seconds=0,
+        now_factory=lambda: datetime(2026, 8, 5, 3, 0, tzinfo=timezone.utc),
+    )
 
     results = service.search(
         "news", "topic", max_results=2, region="us-en", timelimit="d"

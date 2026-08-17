@@ -2,6 +2,10 @@ name: Tool tests
 
 on:
   push:
+    branches:
+      - "**"
+    tags:
+      - "portable-search-mcp-*"
     paths:
       - "tools/portable-search-mcp/**"
       - ".github/workflows/tool-tests.yml"
