@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        This public Beta currently supports Windows, username/password form login, and the legacy synchronous SQL Lab endpoint. Do not share internal URLs, screenshots, credentials, SQL, or data.
+        This public Beta currently supports Windows, username/password form login, and the legacy synchronous SQL Lab endpoint. An Agent may try a safe, local adaptation and report success or failure. Do not share internal URLs, screenshots, credentials, SQL, or data.
   - type: input
     id: environment
     attributes:
@@ -45,11 +45,43 @@ body:
       description: Describe the user action and expected result without internal names or data.
     validations:
       required: true
+  - type: dropdown
+    id: adaptation_result
+    attributes:
+      label: Agent adaptation result
+      options:
+        - Not needed; original version worked
+        - Adapted and verified
+        - Adaptation attempted but failed
+        - Not attempted or cannot adapt safely
+    validations:
+      required: true
+  - type: textarea
+    id: adaptation_summary
+    attributes:
+      label: Redacted adaptation and test summary
+      description: Describe only general code changes, harmless tests, and remaining limitations. Do not include organization-specific endpoints, authentication exceptions, SQL, objects, or data.
+  - type: dropdown
+    id: contribution_status
+    attributes:
+      label: Code contribution status
+      options:
+        - No code change
+        - Local patch available
+        - Pull Request ready
+        - Pull Request opened and linked
+    validations:
+      required: true
   - type: textarea
     id: testability
     attributes:
       label: Safe way to reproduce
       description: State whether you can provide a local demo instance, synthetic fixture, or redacted protocol description. Never provide a real account.
+  - type: input
+    id: pull_request
+    attributes:
+      label: Related public Pull Request
+      description: Optional. Enter only a GitHub Pull Request URL or number for this public repository.
   - type: checkboxes
     id: privacy
     attributes:

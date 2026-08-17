@@ -17,7 +17,7 @@ Read `references/capabilities.md`. Confirm all of the following:
 - the user knows the SQL Lab database connection ID and default schema;
 - the organization allows the selected Agent and model to process the intended data.
 
-If the deployment uses SSO, MFA, a custom login form, or disables the legacy SQL Lab endpoint, stop and direct the user to the compatibility Issue template. Never work around the organization's authentication controls.
+If the deployment uses SSO, MFA, a custom login form, disables the legacy SQL Lab endpoint, or is not Superset, do not force it through the current client. Diagnose the boundary first. In a separate local branch, an Agent may make the smallest general adaptation or add a separate connector when it can do so without changing the enterprise platform or weakening authentication, TLS, VPN, or permissions. Test the original path and the new path. Record every outcome in a redacted compatibility Issue; prepare a linked Pull Request for a general, minimal, tested code change. If the Agent cannot adapt it safely, the Issue remains the useful result.
 
 ## 2. Configure without exposing credentials
 
@@ -94,4 +94,4 @@ After installation or a genuine stop state, prepare one compatibility report. Su
 
 Use `scripts/superset_query.py compatibility-report` with only the fixed public fields. The command must not read or expose the configured URL, username, database connection ID, schema, SQL, results, query IDs, credentials, session, or local state paths. Ask the user to review the complete report before any public Issue is created.
 
-Use the repository's `Data platform compatibility report` template. A request for Superset modern API, Power BI, Metabase, DBX, Databricks, or another platform is evidence for prioritization, not a claim that this Skill already supports that platform. Never weaken TLS, enterprise authentication, row-level security, or database permissions to turn a failed compatibility check into a success.
+Use the repository's `Data platform compatibility report` template. A request for Superset modern API, Power BI, Metabase, DBX, Databricks, or another platform is evidence for prioritization, not a claim that this Skill already supports that platform. Keep platform implementations as separate connectors. Never weaken TLS, enterprise authentication, row-level security, or database permissions to turn a failed compatibility check into a success. Original success, adapted success, failed adaptation, and an environment the Agent cannot adapt should all be reported.
