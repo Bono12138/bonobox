@@ -7,7 +7,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = "1.0.0-beta.1"
+VERSION = "1.0.0-beta.2"
 RELEASE_NAME = f"bonobox-superset-query-v{VERSION}"
 DIST = ROOT / "dist"
 STAGE = DIST / RELEASE_NAME
@@ -16,6 +16,7 @@ ALLOWLIST = (
     "README.md",
     "README.en.md",
     "QUICKSTART.md",
+    "COMPATIBILITY.md",
     "THIRD_PARTY_NOTICES.md",
     "LICENSE",
     "requirements.txt",

@@ -17,7 +17,7 @@ If a tool saves you time, star the repository to follow future releases.
 | Tool | Problem solved | Measured result | Status |
 |---|---|---|---|
 | [Portable Search MCP](tools/portable-search-mcp/) | Adds public web, news, and image search to MCP-compatible agents and local models | 90/90 requests succeeded; web/image returned results in 66/66 runs and news in 24/24; P50 latency 2.537 s | v2.1.0 · released |
-| [Superset Read-only Query Skill](tools/superset-query/) | Runs bounded SELECT queries through a user's existing Superset SQL Lab path | Automated tests cover common write rejection, result limits, CSV safety, session identity, and error classification; the legacy route has private maintainer validation | v1.0.0-beta.1 · public beta |
+| [Superset Read-only Query Skill](tools/superset-query/) | Runs bounded SELECT queries through a user's existing Superset SQL Lab path and collects redacted cross-company compatibility reports | Automated tests cover write rejection, result limits, CSV safety, session identity, error classification, and public compatibility reports; the legacy route has private maintainer validation | v1.0.0-beta.2 · public beta |
 
 ## Portable Search MCP
 
@@ -40,7 +40,7 @@ The release includes Windows setup, locked dependencies, protocol checks, live v
 
 This public beta keeps an Agent on the user's existing Superset SQL Lab path instead of opening a new direct database connection. It rejects common write and administration forms, protects local secrets with Windows DPAPI, binds cached sessions to the configured identity, classifies failures, applies a default 10,000-row result limit, and records run evidence. The validator is not a complete SQL parser; Superset and database permissions must enforce read-only access.
 
-The current release supports Windows, username/password form login, and the legacy synchronous SQL Lab endpoint. SSO, MFA, the modern API transport, and Power BI are not yet supported. See the [tool documentation](tools/superset-query/) for installation, a required live `SELECT 1` check, privacy boundaries, and compatibility feedback.
+The current release supports Windows, username/password form login, and the legacy synchronous SQL Lab endpoint. SSO, MFA, the modern API transport, Power BI, Metabase, DBX, and Databricks are not yet supported. Users can give the copyable prompt in the [tool documentation](tools/superset-query/) to their Agent for environment checking, installation, a required live `SELECT 1`, and a redacted [compatibility report](https://github.com/Bono12138/bonobox/issues/new?template=data_platform_compatibility.yml).
 
 Use [Issues](https://github.com/Bono12138/bonobox/issues) for reproducible problems and tool ideas, [Discussions](https://github.com/Bono12138/bonobox/discussions) for general questions, and [SECURITY.md](SECURITY.md) for private security reports.
 

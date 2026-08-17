@@ -434,6 +434,55 @@ class CompatibilityTests(unittest.TestCase):
         self.assertEqual(client.profile.schema, "custom")
         self.assertEqual(client.profile.query_timeout_seconds, 9)
 
+    def test_public_compatibility_report_is_bounded_and_contains_no_profile_values(self):
+        args = Namespace(
+            result="unsupported",
+            platform="superset-modern-api",
+            platform_version="6.1",
+            login_type="sso",
+            transport="modern-api",
+            agent="codex",
+            database_type="trino",
+            doctor_result="not-attempted",
+            failure_stage="environment",
+            error_category="unsupported",
+        )
+        report = MODULE.build_compatibility_report(args)
+        markdown = MODULE.compatibility_report_markdown(report)
+        self.assertEqual("1.0.0-beta.2", report["tool_version"])
+        self.assertIn("superset-modern-api", markdown)
+        self.assertNotIn("base_url", markdown)
+        self.assertNotIn("database_connection_id", markdown)
+        self.assertNotIn("https://example.invalid", markdown)
+        self.assertNotIn("current-user", markdown)
+        self.assertNotIn("schema", markdown.casefold())
+        self.assertNotIn("credential present", markdown.casefold())
+
+    def test_public_compatibility_report_rejects_url_in_version_field(self):
+        args = Namespace(
+            result="failed",
+            platform="superset-legacy",
+            platform_version="https://example.invalid/superset",
+            login_type="password-form",
+            transport="legacy-sync",
+            agent="other",
+            database_type="unknown",
+            doctor_result="failed",
+            failure_stage="doctor",
+            error_category="network",
+        )
+        with self.assertRaises(ValueError):
+            MODULE.build_compatibility_report(args)
+
+    def test_parser_accepts_compatibility_report_for_other_platforms(self):
+        args = MODULE.build_parser().parse_args([
+            "compatibility-report",
+            "--result", "unsupported",
+            "--platform", "power-bi",
+            "--login-type", "oauth",
+        ])
+        self.assertIs(args.handler, MODULE.command_compatibility_report)
+
 
 class SessionIdentityTests(unittest.TestCase):
     def setUp(self):

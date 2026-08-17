@@ -5,11 +5,13 @@ on:
     paths:
       - "tools/superset-query/**"
       - ".github/ISSUE_TEMPLATE/superset_*.yml"
+      - ".github/ISSUE_TEMPLATE/data_platform_compatibility.yml"
       - ".github/workflows/superset-query-tests.yml"
   pull_request:
     paths:
       - "tools/superset-query/**"
       - ".github/ISSUE_TEMPLATE/superset_*.yml"
+      - ".github/ISSUE_TEMPLATE/data_platform_compatibility.yml"
       - ".github/workflows/superset-query-tests.yml"
 
 permissions:

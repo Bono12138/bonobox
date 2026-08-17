@@ -9,6 +9,8 @@
 <p align="center">
   <a href="README.en.md">English</a> ·
   <a href="QUICKSTART.md">五分钟开始</a> ·
+  <a href="COMPATIBILITY.md">兼容性清单</a> ·
+  <a href="https://github.com/Bono12138/bonobox/issues/new?template=data_platform_compatibility.yml">提交兼容性报告</a> ·
   <a href="https://github.com/Bono12138/bonobox/issues/new?template=superset_query_bug.yml">报告问题</a> ·
   <a href="https://github.com/Bono12138/bonobox/issues/new?template=superset_compatibility.yml">申请适配</a>
 </p>
@@ -47,9 +49,40 @@
 
 如果你的 Superset 使用 SSO、OAuth、MFA、自定义登录页或只开放新版 API，请不要尝试绕过认证。提交[兼容性申请](https://github.com/Bono12138/bonobox/issues/new?template=superset_compatibility.yml)，我们会根据脱敏后的环境信息安排适配。
 
+Power BI、Metabase、DBX、Databricks 和其他企业数据平台目前还没有连接器。它们不是本工具已经支持的功能，但用户可以提交[数据平台兼容性报告](https://github.com/Bono12138/bonobox/issues/new?template=data_platform_compatibility.yml)。成功、失败和当前不支持都算有效样本；项目会根据重复需求、可获得的安全测试环境和维护成本决定开发顺序。DBX 具体指什么产品和接口也请在报告中说明，不默认把它当作 Databricks。当前证据见[兼容性清单](COMPATIBILITY.md)。
+
+## 直接把这段话发给你的 Agent
+
+用户不需要自己判断应该运行哪些命令。把下面整段提示词复制给自己的 Agent 即可：
+
+```text
+请打开并检查这个公开项目：
+https://github.com/Bono12138/bonobox/tree/main/tools/superset-query
+
+先完整阅读 README.md、QUICKSTART.md、COMPATIBILITY.md、query-superset/SKILL.md 和安全说明。第一步只做环境体检，确认我的操作系统、Python、Agent 类型、数据平台、平台版本、登录方式、查询接口和本人已有权限。
+
+如果我的环境属于当前支持范围：
+1. 从 GitHub Release 下载 ZIP 和同名 .sha256，核对 SHA-256 后再解压；
+2. 按文档安装到当前 Agent 的 Skill 目录；如果没有预设安装目标，使用明确的自定义目录，不要猜路径；
+3. 需要密码时，只让我本人在交互式终端中隐藏输入；不要让我把密码、Cookie、Token 或会话发到聊天里；
+4. 不要关闭 TLS，不要绕过 SSO、MFA、VPN、公司证书或权限控制，不要扩大数据库权限；
+5. 依次运行单元测试、status 和 doctor；doctor 必须真实执行 SELECT 1；
+6. 只有测试通过、身份一致且 doctor 成功，才能告诉我安装成功。
+
+如果当前环境不支持，或者安装、认证、doctor、查询任一步失败：
+1. 停止盲目重试，不要修改企业安全设置来强行兼容；
+2. 说明失败发生在哪一步，以及这是操作错误、权限问题、网络问题还是当前版本尚未适配；
+3. 如果已能运行脚本，使用 compatibility-report 生成脱敏报告；否则按照 GitHub 的 Data platform compatibility report 模板整理草稿；
+4. 删除公司名称、内部网址、用户名、凭据、Cookie、Token、SQL、查询结果、数据库和表名、查询编号、本机隐私路径、客户数据与内部截图；
+5. 成功、部分成功、失败或当前不支持都要准备兼容性报告；开发建议另写清楚用户场景和期望动作；
+6. 在提交公开 GitHub Issue 前，把完整内容给我检查和确认。如果你不能操作 GitHub，就给我一份可以直接复制的 Issue 内容。
+
+最后告诉我：环境判断、安装位置、测试结果、doctor 是否成功、当前限制，以及准备提交哪一种兼容性报告。不要输出任何密码、会话或公司敏感信息。
+```
+
 ## 五分钟开始
 
-从 [Superset Query v1.0.0-beta.1 Release](https://github.com/Bono12138/bonobox/releases/tag/superset-query-v1.0.0-beta.1) 下载 ZIP 和 `.sha256` 文件，核对哈希并解压后，在 Windows PowerShell 中运行：
+从 [Superset Query v1.0.0-beta.2 Release](https://github.com/Bono12138/bonobox/releases/tag/superset-query-v1.0.0-beta.2) 下载 ZIP 和 `.sha256` 文件，核对哈希并解压后，在 Windows PowerShell 中运行：
 
 ```powershell
 .\install.ps1 -Target Codex
@@ -109,6 +142,14 @@ python scripts\superset_query.py run --sql-file C:\path\query.sql
 
 ## 遇到问题怎样反馈
 
+### 成功、失败或其他数据平台
+
+运行 `compatibility-report` 生成固定字段的脱敏草稿，再使用[数据平台兼容性报告](https://github.com/Bono12138/bonobox/issues/new?template=data_platform_compatibility.yml)。这个入口接受成功、部分成功、失败、当前不支持以及新连接器需求。用户本人必须在公开提交前复核 Agent 生成的内容。
+
+```powershell
+python scripts\superset_query.py compatibility-report --result success --platform superset-legacy --platform-version 4.1 --login-type password-form --transport legacy-sync --agent codex --database-type trino --doctor-result passed --failure-stage none --error-category none
+```
+
 ### 安装或查询故障
 
 使用[Bug 模板](https://github.com/Bono12138/bonobox/issues/new?template=superset_query_bug.yml)。请提供：
@@ -137,6 +178,7 @@ python scripts\superset_query.py run --sql-file C:\path\query.sql
 - Windows DPAPI 和旧版同步 SQL Lab 路线已在一个真实企业 Superset 部署中完成使用验证；
 - 公开包经过路径、凭据、内部地址、公司信息、SVG 和发布文件白名单检查；
 - 其他 Superset 版本和认证方式仍需通过 `doctor` 逐个确认。
+- `compatibility-report` 只输出固定的公开环境字段，不读取或输出 Superset 地址、用户名、数据库连接 ID、schema、SQL或结果。
 
 测试通过不等于你的部署一定兼容。真实成功标准是：`status` 配置完整、`doctor` 的 `SELECT 1` 成功，并且底层权限仍然只读。
 

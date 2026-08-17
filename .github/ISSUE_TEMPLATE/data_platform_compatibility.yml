@@ -1,0 +1,137 @@
+name: Data platform compatibility report / 数据平台兼容性报告
+description: Report a success, partial success, failure, unsupported environment, or connector request
+title: "[data-platform compatibility] "
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        成功、失败和暂不支持的环境都欢迎反馈。你的报告会帮助项目建立真实兼容性清单，并决定下一步开发哪个连接器。
+
+        You may ask your Agent to generate the report, but review it yourself before posting. Do not share company names, internal URLs, usernames, credentials, cookies, tokens, SQL, results, object names, query IDs, local paths, customer data, or internal screenshots.
+  - type: dropdown
+    id: result
+    attributes:
+      label: Result / 结果
+      options:
+        - Success / 安装和 doctor 成功
+        - Partial / 部分成功
+        - Failed / 尝试后失败
+        - Unsupported / 当前明确不支持
+        - Connector request only / 仅提交连接器需求
+    validations:
+      required: true
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform / 数据平台
+      options:
+        - Superset legacy synchronous SQL Lab
+        - Superset modern API
+        - Power BI
+        - Metabase
+        - DBX
+        - Databricks
+        - Other enterprise data platform
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: Public version information / 可公开的版本信息
+      description: Use version numbers only. Do not include an internal hostname, URL, tenant, workspace, or company name.
+      placeholder: Windows 11; Python 3.12; Superset 6.1; tool 1.0.0-beta.2
+    validations:
+      required: true
+  - type: dropdown
+    id: agent
+    attributes:
+      label: Agent
+      options:
+        - Codex
+        - Cursor
+        - Claude Code
+        - Other
+        - Unknown
+    validations:
+      required: true
+  - type: dropdown
+    id: login
+    attributes:
+      label: Login type / 登录方式
+      options:
+        - Username and password form
+        - SSO
+        - OAuth
+        - MFA or CAPTCHA
+        - API token
+        - Custom
+        - Unknown
+    validations:
+      required: true
+  - type: dropdown
+    id: transport
+    attributes:
+      label: Query transport / 查询方式
+      options:
+        - Legacy synchronous endpoint
+        - Modern API
+        - Browser only
+        - Native platform API
+        - Unknown
+    validations:
+      required: true
+  - type: input
+    id: database_type
+    attributes:
+      label: Underlying database type / 底层数据库类型
+      description: Product type only, such as Hive, Trino, PostgreSQL, Snowflake, or unknown. Do not enter database or schema names.
+      placeholder: Trino
+  - type: dropdown
+    id: doctor
+    attributes:
+      label: Minimal live check / 最小真实验证
+      options:
+        - SELECT 1 passed
+        - SELECT 1 failed
+        - Not attempted because the environment is unsupported
+        - Not applicable to this platform
+    validations:
+      required: true
+  - type: dropdown
+    id: failure_stage
+    attributes:
+      label: Furthest step reached / 最远进行到哪一步
+      options:
+        - Environment check
+        - Install
+        - Configure
+        - Authentication
+        - Doctor or connection test
+        - Read-only query
+        - Full supported flow completed
+        - Connector does not exist yet
+    validations:
+      required: true
+  - type: textarea
+    id: report
+    attributes:
+      label: Redacted report or request / 脱敏报告或需求
+      description: Paste the generated compatibility report or explain the expected user action. Use harmless synthetic checks only.
+      placeholder: Paste the output of compatibility-report here, then add a short public explanation if needed.
+    validations:
+      required: true
+  - type: textarea
+    id: testability
+    attributes:
+      label: Safe test contribution / 可提供的安全测试条件
+      description: Can you provide a local demo, synthetic fixture, public documentation, or a redacted protocol description? Never provide a real enterprise account.
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Public-data check / 公开信息检查
+      options:
+        - label: I reviewed the Agent output and removed company names, internal URLs, usernames, credentials, cookies, tokens, SQL, results, object names, query IDs, local paths, customer data, and internal screenshots.
+          required: true
+        - label: I did not weaken TLS, bypass enterprise authentication, or expand platform/database permissions to make this test pass.
+          required: true

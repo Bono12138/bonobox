@@ -66,3 +66,9 @@ The profile defaults to 10,000 result rows. The request sends that limit to Supe
 ## Public issue boundary
 
 Never attach a profile, DPAPI file, session, raw manifest, SQL containing private objects, result CSV, screenshot with an internal URL, or complete server error page. Reproduce with `SELECT 1` or another harmless synthetic query whenever possible.
+
+## Compatibility feedback
+
+`compatibility-report` produces fixed environment fields for a public Issue. It accepts success, partial success, failure, and unsupported outcomes across Superset legacy, Superset modern API, Power BI, Metabase, DBX, Databricks, and other enterprise platforms. Listing a platform here records demand only; it does not mean the current Superset client can connect to it.
+
+The generated report does not read the local Superset profile, credentials, session, SQL, results, or their paths. The user must review the report before posting it. Free-form reproduction notes belong in the Issue form and must be redacted separately.

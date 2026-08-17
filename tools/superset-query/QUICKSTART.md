@@ -19,8 +19,8 @@ SSO、OAuth、MFA、自定义登录页和新版 API-only 部署不属于当前�
 从 GitHub Release 同时下载 ZIP 和同名 `.sha256` 文件。在 PowerShell 中核对：
 
 ```powershell
-(Get-FileHash .\bonobox-superset-query-v1.0.0-beta.1.zip -Algorithm SHA256).Hash.ToLower()
-Get-Content .\bonobox-superset-query-v1.0.0-beta.1.zip.sha256
+(Get-FileHash .\bonobox-superset-query-v1.0.0-beta.2.zip -Algorithm SHA256).Hash.ToLower()
+Get-Content .\bonobox-superset-query-v1.0.0-beta.2.zip.sha256
 ```
 
 两处哈希必须一致。随后解压，在 PowerShell 进入解压目录。
@@ -107,12 +107,14 @@ python scripts\superset_query.py run --sql "SELECT 1 AS connection_test"
 ## 直接交给 Agent 的提示词
 
 ```text
-请完整阅读 query-superset/SKILL.md 和 references/capabilities.md。
-先检查 Windows、Python、Superset 登录方式和 SQL Lab 权限是否符合当前公开 Beta 的兼容范围。
-符合后，运行单元测试、status 和 doctor。doctor 必须真实执行 SELECT 1。
-需要密码时，只让我在交互式终端中隐藏输入；不要让我把密码、Cookie、token 或会话发到聊天里。
-不要关闭 TLS，不要放宽只读限制，不要猜数据库连接 ID。
-完成后只告诉我：安装路径、测试结果、doctor 是否成功、实际认证用户名是否匹配，以及当前限制。
+请打开 https://github.com/Bono12138/bonobox/tree/main/tools/superset-query，并完整阅读 README.md、QUICKSTART.md、COMPATIBILITY.md、query-superset/SKILL.md 和 references/capabilities.md。
+先只做环境体检，检查操作系统、Python、Agent、数据平台、平台版本、登录方式、查询接口、SQL Lab 权限和组织的数据使用要求。
+符合当前公开 Beta 范围后，核对 Release ZIP 的 SHA-256，再安装并运行单元测试、status 和 doctor。doctor 必须真实执行 SELECT 1，实际身份必须与配置一致。
+需要密码时，只让我本人在交互式终端中隐藏输入；不要让我把密码、Cookie、Token 或会话发到聊天里。
+不要关闭 TLS，不要绕过 SSO、MFA、VPN或公司权限，不要猜数据库连接 ID，也不要扩大数据库权限。
+无论成功、部分成功、失败还是当前不支持，都准备一份脱敏兼容性报告。能运行脚本时使用 compatibility-report；不能运行时按 GitHub 的 Data platform compatibility report 模板整理。
+公开报告不得包含公司名称、内部网址、用户名、凭据、Cookie、Token、SQL、结果、数据库或表名、查询编号、本机隐私路径、客户数据与内部截图。提交 Issue 前先把完整内容给我确认。
+完成后告诉我：环境判断、安装路径、测试结果、doctor 是否成功、身份是否匹配、当前限制，以及建议提交的 Issue 类型。
 ```
 
 ## 失败以后
@@ -128,3 +130,11 @@ python scripts\superset_query.py run --sql "SELECT 1 AS connection_test"
 - `server`：保留脱敏错误和版本信息。
 
 仍无法解决时，使用 GitHub Issue 模板。公开反馈前删除地址、账号、SQL、查询结果、客户数据、原始 manifest、查询编号和内部截图。安全漏洞不要发公开 Issue，应使用仓库的私密安全上报入口。
+
+如果已经完成环境判断，可以生成统一报告：
+
+```powershell
+python scripts\superset_query.py compatibility-report --result failed --platform superset-legacy --platform-version unknown --login-type password-form --transport legacy-sync --agent other --database-type unknown --doctor-result failed --failure-stage doctor --error-category network
+```
+
+将输出交给用户本人检查，再提交到[数据平台兼容性报告](https://github.com/Bono12138/bonobox/issues/new?template=data_platform_compatibility.yml)。
