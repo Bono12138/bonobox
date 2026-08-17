@@ -7,6 +7,7 @@ import getpass
 import hashlib
 import json
 import os
+import platform
 import random
 import re
 import string
@@ -24,7 +25,7 @@ from ctypes import wintypes
 
 
 APP_NAME = "bonobox-query-superset"
-APP_VERSION = "1.0.0-beta.1"
+APP_VERSION = "1.0.0-beta.2"
 DEFAULT_QUERY_TIMEOUT = 300
 DEFAULT_SESSION_HOURS = 12
 DEFAULT_TRANSIENT_RETRIES = 1
@@ -1096,6 +1097,86 @@ def command_doctor(args: argparse.Namespace) -> int:
     return 0
 
 
+def build_compatibility_report(args: argparse.Namespace) -> dict[str, Any]:
+    """Build a bounded report that is safe to paste into a public Issue."""
+    platform_version = str(args.platform_version or "unknown").strip()
+    if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._+() -]{0,49}", platform_version):
+        raise ValueError(
+            "Platform version may contain only a short public version label; "
+            "do not include a URL, company name, path, or server detail."
+        )
+    return {
+        "report_schema": 1,
+        "tool": "bonobox-superset-query",
+        "tool_version": APP_VERSION,
+        "result": args.result,
+        "platform": args.platform,
+        "platform_version": platform_version,
+        "login_type": args.login_type,
+        "transport": args.transport,
+        "operating_system": f"{platform.system()} {platform.release()}".strip(),
+        "python": platform.python_version(),
+        "agent": args.agent,
+        "database_type": args.database_type,
+        "doctor_select_1": args.doctor_result,
+        "failure_stage": args.failure_stage,
+        "error_category": args.error_category,
+        "user_review_required": True,
+        "redaction_notice": (
+            "Do not add company names, internal URLs, usernames, credentials, "
+            "cookies, tokens, SQL, results, object names, query IDs, local paths, "
+            "customer data, or internal screenshots."
+        ),
+    }
+
+
+def compatibility_report_markdown(report: dict[str, Any]) -> str:
+    rows = [
+        ("Tool version", report["tool_version"]),
+        ("Result", report["result"]),
+        ("Platform", report["platform"]),
+        ("Platform version", report["platform_version"]),
+        ("Login type", report["login_type"]),
+        ("Query transport", report["transport"]),
+        ("Operating system", report["operating_system"]),
+        ("Python", report["python"]),
+        ("Agent", report["agent"]),
+        ("Database type", report["database_type"]),
+        ("Doctor SELECT 1", report["doctor_select_1"]),
+        ("Failure stage", report["failure_stage"]),
+        ("Error category", report["error_category"]),
+    ]
+    lines = [
+        "## Data platform compatibility report",
+        "",
+        "| Field | Value |",
+        "|---|---|",
+        *[f"| {label} | `{value}` |" for label, value in rows],
+        "",
+        "### Public-data check",
+        "",
+        "- [ ] I reviewed this report before posting it.",
+        "- [ ] I did not add company names, internal URLs, usernames, credentials, cookies, tokens, SQL, results, object names, query IDs, local paths, customer data, or internal screenshots.",
+        "",
+        "> This report describes compatibility only. It does not prove that an enterprise platform or database is safe for unrestricted Agent access.",
+    ]
+    return "\n".join(lines) + "\n"
+
+
+def command_compatibility_report(args: argparse.Namespace) -> int:
+    report = build_compatibility_report(args)
+    content = (
+        compatibility_report_markdown(report)
+        if args.format == "markdown"
+        else json.dumps(report, ensure_ascii=False, indent=2) + "\n"
+    )
+    if args.output:
+        args.output.parent.mkdir(parents=True, exist_ok=True)
+        _atomic_write(args.output, content.encode("utf-8"))
+    print(content, end="")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Windows Superset read-only query helper for Agent skills.")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -1117,6 +1198,59 @@ def build_parser() -> argparse.ArgumentParser:
     doctor = sub.add_parser("doctor", help="Run a live SELECT 1 connectivity check.")
     doctor.add_argument("--transient-retries", type=int, default=DEFAULT_TRANSIENT_RETRIES)
     doctor.set_defaults(handler=command_doctor)
+    report = sub.add_parser(
+        "compatibility-report",
+        help="Generate a bounded, redacted report for a public compatibility Issue.",
+    )
+    report.add_argument(
+        "--result", required=True,
+        choices=("success", "partial", "failed", "unsupported"),
+    )
+    report.add_argument(
+        "--platform", required=True,
+        choices=(
+            "superset-legacy", "superset-modern-api", "power-bi", "metabase",
+            "dbx", "databricks", "other-enterprise-platform",
+        ),
+    )
+    report.add_argument("--platform-version", default="unknown")
+    report.add_argument(
+        "--login-type", default="unknown",
+        choices=("password-form", "sso", "oauth", "mfa", "custom", "token", "unknown"),
+    )
+    report.add_argument(
+        "--transport", default="unknown",
+        choices=("legacy-sync", "modern-api", "browser", "native-api", "unknown"),
+    )
+    report.add_argument(
+        "--agent", default="unknown",
+        choices=("codex", "cursor", "claude-code", "other", "unknown"),
+    )
+    report.add_argument(
+        "--database-type", default="unknown",
+        choices=(
+            "hive", "trino", "presto", "postgresql", "mysql", "snowflake",
+            "bigquery", "databricks", "other", "unknown",
+        ),
+    )
+    report.add_argument(
+        "--doctor-result", default="not-attempted",
+        choices=("passed", "failed", "not-attempted"),
+    )
+    report.add_argument(
+        "--failure-stage", default="none",
+        choices=("none", "environment", "install", "configure", "auth", "doctor", "query"),
+    )
+    report.add_argument(
+        "--error-category", default="none",
+        choices=(
+            "none", "unsupported", "auth", "policy", "permission", "sql", "object",
+            "resource", "timeout", "network", "server", "local",
+        ),
+    )
+    report.add_argument("--format", choices=("markdown", "json"), default="markdown")
+    report.add_argument("--output", type=Path)
+    report.set_defaults(handler=command_compatibility_report)
     run = sub.add_parser("run", help="Execute one read-only SQL statement.")
     run.add_argument("--sql")
     run.add_argument("--sql-file", type=Path)

@@ -87,3 +87,11 @@ Automatic retries are deliberately limited to transient failures.
 Use the repository's Superset compatibility or bug Issue template. Include the tool version, Windows and Python versions, Superset version if known, login type, command name, error category, HTTP status, and a redacted error excerpt.
 
 Before submission, remove usernames, Superset URLs, database and schema names, SQL, query results, query IDs when sensitive, cookies, tokens, passwords, local paths, customer data, and company-only information.
+
+## 7. Return a compatibility result after real use
+
+After installation or a genuine stop state, prepare one compatibility report. Success, partial success, failure, and an unsupported environment are all useful.
+
+Use `scripts/superset_query.py compatibility-report` with only the fixed public fields. The command must not read or expose the configured URL, username, database connection ID, schema, SQL, results, query IDs, credentials, session, or local state paths. Ask the user to review the complete report before any public Issue is created.
+
+Use the repository's `Data platform compatibility report` template. A request for Superset modern API, Power BI, Metabase, DBX, Databricks, or another platform is evidence for prioritization, not a claim that this Skill already supports that platform. Never weaken TLS, enterprise authentication, row-level security, or database permissions to turn a failed compatibility check into a success.

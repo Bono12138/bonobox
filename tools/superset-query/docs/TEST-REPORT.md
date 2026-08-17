@@ -1,7 +1,7 @@
 # Superset query public Beta test report
 
 > Review date: 2026-08-17
-> Release: `1.0.0-beta.1`
+> Release: `1.0.0-beta.2`
 
 ## What was tested
 
@@ -16,7 +16,9 @@ The automated suite covers:
 - bounded observer output that does not copy other SQL;
 - encrypted-session identity binding;
 - invalidation after username changes;
-- result-row enforcement and CSV formula neutralization.
+- result-row enforcement and CSV formula neutralization;
+- bounded compatibility reports for successful, failed, partial, unsupported, and other-platform environments;
+- rejection of URLs and other non-version text in the public platform-version field.
 
 The exact local test count is recorded by the release workflow rather than frozen in this document.
 
