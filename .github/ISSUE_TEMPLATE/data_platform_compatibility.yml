@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        成功、失败和暂不支持的环境都欢迎反馈。你的报告会帮助项目建立真实兼容性清单，并决定下一步开发哪个连接器。
+        原版成功、Agent 改造成功、改造失败和暂时无法改造都欢迎反馈。你的报告会帮助项目建立真实兼容性清单，并决定下一步开发哪个连接器。
 
         You may ask your Agent to generate the report, but review it yourself before posting. Do not share company names, internal URLs, usernames, credentials, cookies, tokens, SQL, results, object names, query IDs, local paths, customer data, or internal screenshots.
   - type: dropdown
@@ -113,6 +113,34 @@ body:
         - Connector does not exist yet
     validations:
       required: true
+  - type: dropdown
+    id: adaptation_result
+    attributes:
+      label: Agent adaptation result / Agent 改造结果
+      options:
+        - Not needed; original version worked / 无需改造，原版可用
+        - Adapted and verified / 已改造并验证成功
+        - Adaptation attempted but failed / 已尝试改造但失败
+        - Not attempted or cannot adapt safely / 未尝试或当前无法安全改造
+    validations:
+      required: true
+  - type: textarea
+    id: adaptation_summary
+    attributes:
+      label: Redacted adaptation and test summary / 脱敏的改造与测试摘要
+      description: Describe only general code changes, harmless tests, and remaining limitations. Do not include organization-specific endpoints, authentication exceptions, SQL, objects, or data.
+      placeholder: "Example: Added a separate transport adapter, kept the original connector unchanged, and verified both paths with unit tests and a harmless connection check."
+  - type: dropdown
+    id: contribution_status
+    attributes:
+      label: Code contribution / 代码贡献状态
+      options:
+        - No code change / 没有代码修改
+        - Local patch available / 有本地补丁
+        - Pull Request ready / 已准备 Pull Request
+        - Pull Request opened and linked / 已提交并关联 Pull Request
+    validations:
+      required: true
   - type: textarea
     id: report
     attributes:
@@ -126,6 +154,11 @@ body:
     attributes:
       label: Safe test contribution / 可提供的安全测试条件
       description: Can you provide a local demo, synthetic fixture, public documentation, or a redacted protocol description? Never provide a real enterprise account.
+  - type: input
+    id: pull_request
+    attributes:
+      label: Related public Pull Request / 关联的公开 Pull Request
+      description: Optional. Enter only a GitHub Pull Request URL or number for this public repository.
   - type: checkboxes
     id: privacy
     attributes:

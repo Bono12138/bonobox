@@ -20,6 +20,10 @@
 
 成功、部分成功、失败和明确不支持都可以提交[数据平台兼容性报告](https://github.com/Bono12138/bonobox/issues/new?template=data_platform_compatibility.yml)。
 
+这个项目也接受 Agent 协助完成的适配：先在本地单独分支中做最小修改并运行测试，再用 Issue 记录原版结果、改造结果和剩余限制。通用、脱敏且有测试的代码通过 Pull Request 提交，并关联对应 Issue。原版成功、改造成功、改造失败和暂时无法改造都是有效样本。
+
+适配只能修改本地工具或新增独立连接器，不得修改企业平台、绕过认证或扩大权限。不同平台保持独立连接器，共享兼容性报告和贡献流程。
+
 Superset Query `1.0.0-beta.2` 可以生成一份有固定字段的脱敏草稿：
 
 ```powershell

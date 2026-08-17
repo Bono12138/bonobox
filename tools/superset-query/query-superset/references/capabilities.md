@@ -72,3 +72,5 @@ Never attach a profile, DPAPI file, session, raw manifest, SQL containing privat
 `compatibility-report` produces fixed environment fields for a public Issue. It accepts success, partial success, failure, and unsupported outcomes across Superset legacy, Superset modern API, Power BI, Metabase, DBX, Databricks, and other enterprise platforms. Listing a platform here records demand only; it does not mean the current Superset client can connect to it.
 
 The generated report does not read the local Superset profile, credentials, session, SQL, results, or their paths. The user must review the report before posting it. Free-form reproduction notes belong in the Issue form and must be redacted separately.
+
+An Agent may adapt the local tool in a separate branch or add a separate platform connector. It must preserve the existing security boundary, add tests, run a harmless live check when possible, and report the original and adapted outcomes. A reusable code change belongs in a Pull Request linked to the compatibility Issue. A failed or unavailable adaptation is still a valid Issue result.

@@ -107,14 +107,14 @@ python scripts\superset_query.py run --sql "SELECT 1 AS connection_test"
 ## 直接交给 Agent 的提示词
 
 ```text
-请打开 https://github.com/Bono12138/bonobox/tree/main/tools/superset-query，并完整阅读 README.md、QUICKSTART.md、COMPATIBILITY.md、query-superset/SKILL.md 和 references/capabilities.md。
-先只做环境体检，检查操作系统、Python、Agent、数据平台、平台版本、登录方式、查询接口、SQL Lab 权限和组织的数据使用要求。
-符合当前公开 Beta 范围后，核对 Release ZIP 的 SHA-256，再安装并运行单元测试、status 和 doctor。doctor 必须真实执行 SELECT 1，实际身份必须与配置一致。
-需要密码时，只让我本人在交互式终端中隐藏输入；不要让我把密码、Cookie、Token 或会话发到聊天里。
-不要关闭 TLS，不要绕过 SSO、MFA、VPN或公司权限，不要猜数据库连接 ID，也不要扩大数据库权限。
-无论成功、部分成功、失败还是当前不支持，都准备一份脱敏兼容性报告。能运行脚本时使用 compatibility-report；不能运行时按 GitHub 的 Data platform compatibility report 模板整理。
-公开报告不得包含公司名称、内部网址、用户名、凭据、Cookie、Token、SQL、结果、数据库或表名、查询编号、本机隐私路径、客户数据与内部截图。提交 Issue 前先把完整内容给我确认。
-完成后告诉我：环境判断、安装路径、测试结果、doctor 是否成功、身份是否匹配、当前限制，以及建议提交的 Issue 类型。
+请打开 https://github.com/Bono12138/bonobox/tree/main/tools/superset-query，并完整阅读 README.md、QUICKSTART.md、COMPATIBILITY.md、query-superset/SKILL.md、references/capabilities.md、贡献指南和安全说明。目标是尽量让工具在我的环境中可用，并把结果反馈给项目。
+先识别操作系统、Agent、数据平台、版本、浏览器中实际可用的入口、登录方式、查询接口和本人已有权限。不要因为已有一个配置，就默认它适用于所有环境。
+原版支持时，核对 Release ZIP 的 SHA-256，安装并运行单元测试、status 和 doctor；doctor 必须真实执行 SELECT 1，身份必须一致。
+原版不能使用时，先判断是配置、多个入口、认证、接口版本、权限、网络，还是缺少连接器。在不修改企业平台、不绕过安全控制、不扩大权限的前提下，可以在单独分支中对本地工具做最小改造或新增独立连接器。
+改造后运行原有测试、新增针对性测试，并使用 SELECT 1 或平台等价的无敏感数据检查验证。需要密码时，只让我本人在交互式终端隐藏输入。
+无论原版成功、改造成功、改造失败还是暂时无法改造，都准备脱敏 GitHub Issue；通用、最小且有测试的代码修改同时准备 Pull Request 并关联 Issue。
+Issue和PR不得包含公司名称、内部网址、用户名、凭据、Cookie、Token、SQL、结果、数据库或表名、查询编号、本机隐私路径、客户数据或内部截图。公开提交前先把完整内容给我确认；确认后有授权就提交，否则给我可直接复制的内容。
+完成后告诉我：环境判断、原版结果、改造内容、测试结果、当前限制、Issue类型，以及是否有可提交的PR。
 ```
 
 ## 失败以后
