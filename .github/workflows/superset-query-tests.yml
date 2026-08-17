@@ -2,6 +2,10 @@ name: Superset query tests
 
 on:
   push:
+    branches:
+      - "**"
+    tags:
+      - "superset-query-*"
     paths:
       - "tools/superset-query/**"
       - ".github/ISSUE_TEMPLATE/superset_*.yml"
