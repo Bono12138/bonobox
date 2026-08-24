@@ -29,6 +29,7 @@
 |---|---|---|---|
 | [Portable Search MCP](tools/portable-search-mcp/) | 给支持 MCP 的本地模型、Agent、IDE 和自动化流程增加公开网页、新闻和图片搜索 | 90/90 请求成功；网页/图片 66/66、新闻 24/24 轮有结果；P50 2.537 秒 | v2.1.0 · 已发布 |
 | [Superset 只读查询 Skill](tools/superset-query/) | 让 Agent 通过用户已有的 Superset SQL Lab 通道执行有边界的 SELECT 查询，并汇集跨公司的脱敏兼容性反馈 | 自动测试覆盖写入拦截、结果上限、CSV 安全、会话身份、错误分类和公开兼容性报告；旧版同步 SQL Lab 路线有维护者私下验证 | v1.0.0-beta.2 · 公开 Beta |
+| [Wiki Connector](tools/wiki-connector/) | 让 Agent 通过用户自己的 Wiki 权限搜索和读取资料，并自动生成脱敏诊断反馈 | 离线测试覆盖 URL、安全边界、诊断报告和错误脱敏；真实环境仍需由使用者运行 `doctor` 验证 | v0.1.0-beta.1 · 公开 Beta |
 
 ## 第一件工具：Portable Search MCP
 
@@ -104,11 +105,18 @@ PASS live_search valid_results=...
 
 当前版本只支持 Windows、用户名密码表单登录和旧版同步 SQL Lab 接口。SSO、MFA、新版 API、Power BI、Metabase、DBX 和 Databricks 尚未支持。用户可以把[工具文档](tools/superset-query/)里的完整提示词直接交给自己的 Agent，由 Agent 做环境判断、安装、真实 `SELECT 1` 验证并准备脱敏反馈。成功、失败、当前不支持和其他平台需求都可以提交[数据平台兼容性报告](https://github.com/Bono12138/bonobox/issues/new?template=data_platform_compatibility.yml)。
 
+## 第三件工具：Wiki Connector
+
+它让 Agent 使用用户本人已有的 Wiki 权限搜索和读取资料。初版优先支持 Windows，并提供 API Token 和本地浏览器两条连接方式；实际是否可用取决于 Wiki 版本、登录方式、权限和企业安全策略。
+
+把[工具文档](tools/wiki-connector/)中的提示词交给 Agent，Agent 会安装、运行 `doctor`、尝试在安全边界内适配，并生成不含公司资料的诊断报告。无论直接成功、修改后成功还是暂时无法使用，都可以提交 [Wiki Connector 兼容性反馈](https://github.com/Bono12138/bonobox/issues/new?template=wiki_connector_compatibility.yml)。
+
 ## 更新与反馈
 
 - 使用问题和可复现故障：[Bug report](https://github.com/Bono12138/bonobox/issues/new?template=bug_report.yml)
 - 新工具和改进建议：[Tool idea](https://github.com/Bono12138/bonobox/issues/new?template=tool_idea.yml)
 - 数据平台成功、失败、兼容性和连接器需求：[Compatibility report](https://github.com/Bono12138/bonobox/issues/new?template=data_platform_compatibility.yml)
+- Wiki 安装成功、失败、适配结果和需求：[Wiki Connector report](https://github.com/Bono12138/bonobox/issues/new?template=wiki_connector_compatibility.yml)
 - 一般讨论和使用分享：[Discussions](https://github.com/Bono12138/bonobox/discussions)
 - 安全问题：不要创建公开 Issue，请按 [SECURITY.md](SECURITY.md) 私下报告
 

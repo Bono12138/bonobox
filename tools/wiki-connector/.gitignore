@@ -1,0 +1,11 @@
+# --- user-local state: NEVER publish these ---
+config.json
+telemetry.jsonl
+support-report.json
+.last-failure.json
+wiki_bridge_executor.json
+.browser-profile/
+__pycache__/
+*.pyc
+.venv/
+venv/

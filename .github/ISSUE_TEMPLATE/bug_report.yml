@@ -9,6 +9,8 @@ body:
       label: Tool
       options:
         - Portable Search MCP
+        - Superset Read-only Query Skill
+        - Wiki Connector
     validations:
       required: true
   - type: input

@@ -1,0 +1,41 @@
+name: Wiki Connector 兼容性反馈
+description: 无论安装成功、修复成功或暂时无法使用，都欢迎提交脱敏反馈
+title: "[wiki-connector] "
+labels: [compatibility]
+body:
+  - type: dropdown
+    id: outcome
+    attributes:
+      label: 结果
+      options:
+        - 安装并查询成功
+        - Agent 修改后成功
+        - 安装成功但查询失败
+        - 当前环境暂不支持
+        - 其他建议
+    validations:
+      required: true
+  - type: textarea
+    id: report
+    attributes:
+      label: 脱敏诊断报告
+      description: 粘贴 `python wiki_connector.py report` 的输出。提交前再次确认没有公司名、Wiki 地址、账号、页面内容、Token、Cookie 或本机隐私路径。
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: changes
+    attributes:
+      label: Agent 做过哪些修改
+      description: 如果 Agent 修复过工具，请概括修改；可以附公开 Fork 或 Pull Request。
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: 希望支持什么
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: 隐私确认
+      options:
+        - label: 我已删除公司名、内部网址、账号、页面标题与内容、Token、Cookie、SQL、客户数据和本机隐私路径。
+          required: true

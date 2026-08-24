@@ -18,6 +18,7 @@ If a tool saves you time, star the repository to follow future releases.
 |---|---|---|---|
 | [Portable Search MCP](tools/portable-search-mcp/) | Adds public web, news, and image search to MCP-compatible agents and local models | 90/90 requests succeeded; web/image returned results in 66/66 runs and news in 24/24; P50 latency 2.537 s | v2.1.0 · released |
 | [Superset Read-only Query Skill](tools/superset-query/) | Runs bounded SELECT queries through a user's existing Superset SQL Lab path and collects redacted cross-company compatibility reports | Automated tests cover write rejection, result limits, CSV safety, session identity, error classification, and public compatibility reports; the legacy route has private maintainer validation | v1.0.0-beta.2 · public beta |
+| [Wiki Connector](tools/wiki-connector/) | Lets an Agent search and read Confluence with the user's existing access, then create a redacted compatibility report | Offline tests cover URL validation, read-only boundaries, local browser control, diagnostics, and redaction; each real environment must pass `doctor` | v0.1.0-beta.1 · public beta |
 
 ## Portable Search MCP
 
@@ -41,6 +42,10 @@ The release includes Windows setup, locked dependencies, protocol checks, live v
 This public beta keeps an Agent on the user's existing Superset SQL Lab path instead of opening a new direct database connection. It rejects common write and administration forms, protects local secrets with Windows DPAPI, binds cached sessions to the configured identity, classifies failures, applies a default 10,000-row result limit, and records run evidence. The validator is not a complete SQL parser; Superset and database permissions must enforce read-only access.
 
 The current release supports Windows, username/password form login, and the legacy synchronous SQL Lab endpoint. SSO, MFA, the modern API transport, Power BI, Metabase, DBX, and Databricks are not yet supported. Users can give the copyable prompt in the [tool documentation](tools/superset-query/) to their Agent for environment checking, installation, a required live `SELECT 1`, and a redacted [compatibility report](https://github.com/Bono12138/bonobox/issues/new?template=data_platform_compatibility.yml).
+
+## Wiki Connector
+
+This Windows-first beta gives an Agent read-only Confluence search and page retrieval through either an API token or a dedicated local browser profile. Compatibility depends on the Wiki version, authentication flow, permissions, network, and company security policy. Give the Chinese prompt in the [tool documentation](tools/wiki-connector/) to an Agent; it will install the tool, run `doctor`, attempt a minimal safe adaptation when needed, and prepare a redacted Issue for the user to review.
 
 Use [Issues](https://github.com/Bono12138/bonobox/issues) for reproducible problems and tool ideas, [Discussions](https://github.com/Bono12138/bonobox/discussions) for general questions, and [SECURITY.md](SECURITY.md) for private security reports.
 
