@@ -1,0 +1,4 @@
+interface:
+  display_name: "Reality Grounding"
+  short_description: "Investigate reality before recommending action"
+  default_prompt: "Use $reality-grounding to identify decision-changing unknowns, inspect approved evidence, ask only necessary questions, and block advice that relies on unavailable authority or idealised process."

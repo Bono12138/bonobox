@@ -1,0 +1,79 @@
+#!/usr/bin/env python3
+"""Install the bundled reality-grounding Skill without overwriting local work."""
+
+from __future__ import annotations
+
+import argparse
+import hashlib
+import os
+import shutil
+import sys
+from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parent
+SOURCE = ROOT / "reality-grounding"
+
+
+def tree_digest(path: Path) -> str:
+    digest = hashlib.sha256()
+    for item in sorted(p for p in path.rglob("*") if p.is_file()):
+        if "__pycache__" in item.parts or item.suffix == ".pyc":
+            continue
+        digest.update(item.relative_to(path).as_posix().encode("utf-8"))
+        digest.update(b"\0")
+        digest.update(item.read_bytes())
+        digest.update(b"\0")
+    return digest.hexdigest()
+
+
+def target_root(name: str) -> Path:
+    home = Path.home()
+    if name == "agents":
+        return home / ".agents" / "skills"
+    if name == "codex":
+        codex_home = Path(os.environ.get("CODEX_HOME", home / ".codex"))
+        return codex_home / "skills"
+    if name == "claude":
+        return home / ".claude" / "skills"
+    raise ValueError(name)
+
+
+def install(root: Path) -> Path:
+    destination = root.expanduser().resolve() / "reality-grounding"
+    if not SOURCE.is_dir():
+        raise RuntimeError(f"bundled Skill not found: {SOURCE}")
+    if destination.exists():
+        if destination.is_dir() and tree_digest(destination) == tree_digest(SOURCE):
+            print(f"PASS already_installed={destination}")
+            return destination
+        raise FileExistsError(
+            f"target already exists and differs: {destination}; compare it before replacing"
+        )
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copytree(SOURCE, destination)
+    if tree_digest(destination) != tree_digest(SOURCE):
+        raise RuntimeError("installed Skill does not match the bundled source")
+    print(f"PASS installed={destination}")
+    return destination
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--target", choices=("agents", "codex", "claude"), default="agents"
+    )
+    parser.add_argument(
+        "--path", type=Path, help="custom Skill root; reality-grounding is created inside it"
+    )
+    args = parser.parse_args()
+    try:
+        install(args.path if args.path else target_root(args.target))
+    except (OSError, RuntimeError) as exc:
+        print(f"ERROR {exc}", file=sys.stderr)
+        return 1
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

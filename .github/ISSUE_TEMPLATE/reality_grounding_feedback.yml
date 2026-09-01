@@ -1,0 +1,41 @@
+name: Reality Grounding 使用反馈
+description: 安装成功、触发失败或回答行为不符合预期时，提交脱敏反馈
+title: "[reality-grounding] "
+labels: [compatibility]
+body:
+  - type: dropdown
+    id: outcome
+    attributes:
+      label: 结果
+      options:
+        - 安装并成功调用
+        - 安装成功但 Agent 没有发现 Skill
+        - Agent 调用了 Skill，但仍然跳过现实调查
+        - 当前 Agent 不支持 Skills
+        - 安装失败
+        - 其他建议
+    validations:
+      required: true
+  - type: input
+    id: host
+    attributes:
+      label: Agent 与版本
+      description: 例如 Codex desktop、Claude Code；不知道版本可以留空。
+  - type: textarea
+    id: steps
+    attributes:
+      label: 脱敏后的复现步骤与结果
+      description: 请使用虚构或公开场景。不要粘贴真实公司、人物、内部文件或任务内容。
+    validations:
+      required: true
+  - type: textarea
+    id: expectation
+    attributes:
+      label: 你期望它先检查什么
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: 隐私确认
+      options:
+        - label: 我已删除公司名、人物姓名、内部网址、文件内容、真实任务信息、账号、凭据、客户数据和本机绝对路径。
+          required: true

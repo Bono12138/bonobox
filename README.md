@@ -30,6 +30,7 @@
 | [Portable Search MCP](tools/portable-search-mcp/) | 给支持 MCP 的本地模型、Agent、IDE 和自动化流程增加公开网页、新闻和图片搜索 | 90/90 请求成功；网页/图片 66/66、新闻 24/24 轮有结果；P50 2.537 秒 | v2.1.0 · 已发布 |
 | [Superset 只读查询 Skill](tools/superset-query/) | 让 Agent 通过用户已有的 Superset SQL Lab 通道执行有边界的 SELECT 查询，并汇集跨公司的脱敏兼容性反馈 | 自动测试覆盖写入拦截、结果上限、CSV 安全、会话身份、错误分类和公开兼容性报告；旧版同步 SQL Lab 路线有维护者私下验证 | v1.0.0-beta.2 · 公开 Beta |
 | [Wiki Connector](tools/wiki-connector/) | 让 Agent 通过用户自己的 Wiki 权限搜索和读取资料，并自动生成脱敏诊断反馈 | 离线测试覆盖 URL、安全边界、诊断报告和错误脱敏；真实环境仍需由使用者运行 `doctor` 验证 | v0.1.0-beta.1 · 公开 Beta |
+| [丢掉幻想：Reality Grounding Skill](tools/reality-grounding/) | 让 Agent 在建议、规划和系统设计前，先检查真实权限、实际做法、参与者行为和会改变行动的未知信息 | 安装、自检和结构验证通过本地测试；包含六类行为验收案例，具体模型和宿主仍需确认实际触发 | v0.2.0 · 公开 Beta |
 
 ## 第一件工具：Portable Search MCP
 
@@ -111,12 +112,19 @@ PASS live_search valid_results=...
 
 把[工具文档](tools/wiki-connector/)中的提示词交给 Agent，Agent 会安装、运行 `doctor`、尝试在安全边界内适配，并生成不含公司资料的诊断报告。无论直接成功、修改后成功还是暂时无法使用，都可以提交 [Wiki Connector 兼容性反馈](https://github.com/Bono12138/bonobox/issues/new?template=wiki_connector_compatibility.yml)。
 
+## 第四件工具：丢掉幻想
+
+`reality-grounding` 处理一种常见的 AI 失真：它看见组织架构和正式制度，就默认相关关系会真实运行；它也容易假设用户拥有权限、其他人愿意配合、现有材料不存在冲突。
+
+这个 Skill 要求 Agent 先锁定用户真正要做的决定，再查看已经提供或授权的证据，区分事实、制度、实际做法、推断和未知。只有某个问题的不同答案会改变下一步时，它才应该回来问用户。完整安装提示词、自检方法、案例和能力边界见[工具文档](tools/reality-grounding/)。
+
 ## 更新与反馈
 
 - 使用问题和可复现故障：[Bug report](https://github.com/Bono12138/bonobox/issues/new?template=bug_report.yml)
 - 新工具和改进建议：[Tool idea](https://github.com/Bono12138/bonobox/issues/new?template=tool_idea.yml)
 - 数据平台成功、失败、兼容性和连接器需求：[Compatibility report](https://github.com/Bono12138/bonobox/issues/new?template=data_platform_compatibility.yml)
 - Wiki 安装成功、失败、适配结果和需求：[Wiki Connector report](https://github.com/Bono12138/bonobox/issues/new?template=wiki_connector_compatibility.yml)
+- Reality Grounding 安装、触发和回答行为：[Reality Grounding report](https://github.com/Bono12138/bonobox/issues/new?template=reality_grounding_feedback.yml)
 - 一般讨论和使用分享：[Discussions](https://github.com/Bono12138/bonobox/discussions)
 - 安全问题：不要创建公开 Issue，请按 [SECURITY.md](SECURITY.md) 私下报告
 
