@@ -1,6 +1,6 @@
-name: Reality Grounding 使用反馈
-description: 安装成功、触发失败或回答行为不符合预期时，提交脱敏反馈
-title: "[reality-grounding] "
+name: Reality Skills 使用反馈
+description: 两个 Skill 的安装、触发、现实调查或策略行为不符合预期时，提交脱敏反馈
+title: "[reality-skills] "
 labels: [compatibility]
 body:
   - type: dropdown
@@ -11,6 +11,8 @@ body:
         - 安装并成功调用
         - 安装成功但 Agent 没有发现 Skill
         - Agent 调用了 Skill，但仍然跳过现实调查
+        - Agent 问清了现实，但策略仍然普通或无法执行
+        - Agent 给了策略，但没有继续追踪结果
         - 当前 Agent 不支持 Skills
         - 安装失败
         - 其他建议

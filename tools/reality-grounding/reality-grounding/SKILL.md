@@ -6,9 +6,11 @@ description: Actively discover how a situation really works before advice, plann
 # Reality Grounding
 
 Find enough reality to make the next decision without inventing an ideal
-organisation. This Skill is not a questionnaire. It is an active evidence loop.
+organisation. This Skill is not a questionnaire and not a one-turn advice
+generator. It owns an active loop of inquiry, action, observed feedback and
+revision until the user confirms a real stopping point.
 
-Standalone version: `0.2.0`.
+Standalone version: `0.3.0`.
 
 Read `references/active-inquiry.md` when material facts are missing, the user
 asks for proactive investigation, or the available source should be chosen.
@@ -37,6 +39,11 @@ Separate:
 A document proves what it says, not that people follow it. A repeated Agent
 claim does not turn a hypothesis into a fact.
 
+Before substantial advice, decide whether the current information can actually
+separate the available routes. If a material unknown changes the actor, first
+step, feasibility or social risk, ask first. A short preview of the branches
+may explain the question; it must not become a premature catalogue of advice.
+
 ## Investigate actively
 
 For every unknown that could change the decision:
@@ -57,6 +64,10 @@ For every unknown that could change the decision:
 Do not ask the user to repeat information already available in the current
 conversation or approved workspace. Do not wait for a perfect picture when the
 remaining uncertainty does not change the action.
+
+Assume the user may report only the painful symptom and may not know what
+background matters. The Agent owns gap discovery and the next inquiry. Do not
+wait for the user to volunteer the rest or ask them to perform the analysis.
 
 ## Check actual execution conditions
 
@@ -93,6 +104,46 @@ If the user is unlikely to know the formal answer, ask for the last real case,
 current file, actual operator, observed failure, or other concrete evidence.
 Do not ask someone to describe a complete SOP when the task can be discovered
 from actual work and artefacts.
+
+Make questions answerable from ordinary observation. Use scene choices,
+relative positions, recent events and visible behaviour instead of requesting
+measurements or abstractions the user is unlikely to know. For example, ask
+whether everyone can hear one another or the office is divided into separate
+areas, rather than asking for exact floor area. If the user does not know,
+change the evidence route or ask for an observable proxy.
+
+## Find the blocked transition
+
+Break the desired change into the states that must occur. Identify which
+transition is blocked before searching for solutions. A user may already know
+the physical remedy while being unable to make another person recognise the
+problem. In that case, more remedies do not help; the work is to create a
+credible, low-cost path to awareness.
+
+When a direct transition is blocked, search for alternate carriers and
+settings: an informal influencer, trusted peer, naturally outspoken person,
+existing joke, routine, meeting, physical layout, timing, default rule, or a
+small reversible probe. Do not restrict the actor map to the user and formal
+roles such as manager, HR or administrator.
+
+An indirect scene may carry both the diagnostic signal and an available next
+action. For example, a conversation that the relevant person can naturally
+overhear may cause self-recognition while also mentioning the behaviour that
+would remove the problem. Treat this as designed information flow, not as a
+generic recommendation to hint or manipulate. Check audience size, source
+certainty, power relations, local humour, deniability, humiliation risk and
+how the scene can stop if it lands badly.
+
+## Keep ownership after the first action
+
+Choose a proportional action or reversible probe, state what the user should
+observe, and ask what actually happened. Update the hypotheses and choose the
+next inquiry or action. Do not blame execution merely because the expected
+effect did not occur, and do not repeat the same advice unchanged.
+
+Giving advice is not completion. The issue stops only when the user confirms
+the outcome is achieved or acceptable, chooses to stop, or further progress
+requires unavailable access or authority.
 
 ## Refuse the ideal-world shortcut
 

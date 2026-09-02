@@ -62,7 +62,41 @@ Do not present an interrogation. Explain why the answer matters when that helps
 the user respond. Ask one to three questions, use the answers, then decide
 whether another round is still necessary.
 
-## 5. Learn from missing and conflicting evidence
+Assume the user may not volunteer the missing context and may not know formal
+labels or exact measurements. Keep ownership of the inquiry. Turn abstract
+conditions into ordinary observations:
+
+- ask whether everyone can hear one another or the workplace is split into
+  separate areas, rather than asking for floor area;
+- ask who normally dares to joke with or correct the person, rather than asking
+  for a stakeholder power map;
+- ask what the person visibly did immediately before the problem appeared,
+  rather than asking for a causal assessment;
+- ask whether the outcome disappeared, reduced, stayed the same or created a
+  new problem, rather than asking whether the intervention was successful.
+
+If the user cannot answer, change the source, use a visible proxy, or design a
+small reversible observation. Do not repeat the same abstract question.
+
+## 5. Search for alternate paths through the situation
+
+When the obvious action is socially, politically or practically blocked,
+identify the exact state transition that cannot occur. Then search beyond the
+formal actor list for a carrier, setting or mechanism that can make that
+transition happen.
+
+Possible carriers include trusted peers, informal influencers, naturally
+outspoken people, existing routines, public-but-ordinary conversations,
+physical layout, timing, default rules and reversible probes. An overheard
+conversation can sometimes transmit both a diagnostic signal and a feasible
+remedy without forcing the user into direct confrontation.
+
+Before using an indirect scene, establish the audience size, source certainty,
+relationships and status, local tolerance for jokes, likelihood that the user
+will be exposed, and how the interaction can stop if it lands badly. Creative
+does not mean theatrical at any cost; the route must reduce the real obstacle.
+
+## 6. Learn from missing and conflicting evidence
 
 Missing evidence is itself informative only within limits. It may indicate that
 the process is informal, ownership is unclear or the requested object never
@@ -77,7 +111,17 @@ When sources conflict:
 - seek the smallest additional observation that separates the explanations;
 - preserve the conflict if it cannot be resolved before the decision.
 
-## 6. Stop deliberately
+## 7. Continue through observed feedback
+
+After an action or probe, ask what actually happened. Update the working
+hypothesis before giving the next step. A performed action is not a solved
+problem, and a failed result does not prove that the user executed badly.
+
+Stop only when the user confirms an acceptable outcome, chooses to stop, the
+remaining uncertainty cannot change the current action, or progress needs
+unavailable authority or evidence.
+
+## 8. Stop deliberately
 
 Stop collecting when one of these is true:
 

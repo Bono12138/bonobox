@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify a reality-grounding Skill installation and its record validator."""
+"""Verify the paired reality Skills and the grounding record validator."""
 
 from __future__ import annotations
 
@@ -13,7 +13,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parent
-REQUIRED = (
+GROUNDING_REQUIRED = (
     "SKILL.md",
     "agents/openai.yaml",
     "references/active-inquiry.md",
@@ -21,8 +21,14 @@ REQUIRED = (
     "references/reality-record-contract.md",
     "scripts/validate_reality_record.py",
 )
+STRATEGY_REQUIRED = (
+    "SKILL.md",
+    "agents/openai.yaml",
+    "references/evaluation-cases.md",
+    "references/strategy-case-contract.md",
+    "references/streetwise-patterns.md",
+)
 FORBIDDEN_INTERNAL = (
-    "$reality" + "-strategy",
     "usage" + "_id",
     "Bono" + " Insight",
 )
@@ -103,7 +109,7 @@ def load_validator(skill: Path):
 
 def verify(skill: Path) -> list[str]:
     errors: list[str] = []
-    for relative in REQUIRED:
+    for relative in GROUNDING_REQUIRED:
         if not (skill / relative).is_file():
             errors.append(f"missing file: {relative}")
     if errors:
@@ -135,6 +141,50 @@ def verify(skill: Path) -> list[str]:
     return errors
 
 
+def verify_strategy(skill: Path) -> list[str]:
+    errors: list[str] = []
+    for relative in STRATEGY_REQUIRED:
+        if not (skill / relative).is_file():
+            errors.append(f"missing strategy file: {relative}")
+    if errors:
+        return errors
+    text = (skill / "SKILL.md").read_text(encoding="utf-8")
+    if not text.startswith("---\n") or "name: reality-strategy" not in text:
+        errors.append("reality-strategy frontmatter is invalid")
+    refs = set(re.findall(r"`((?:references|scripts)/[^`]+)`", text))
+    for relative in sorted(refs):
+        if not (skill / relative).is_file():
+            errors.append(f"broken strategy reference: {relative}")
+    patterns = (skill / "references" / "streetwise-patterns.md").read_text(
+        encoding="utf-8"
+    )
+    cases = (skill / "references" / "evaluation-cases.md").read_text(
+        encoding="utf-8"
+    )
+    checks = (
+        (text, "Find the transition that is actually blocked"),
+        (text, "Inventory the means already at hand"),
+        (text, "non-obvious but still plausible"),
+        (text, "Giving a clever suggestion is not completion"),
+        (patterns, "Borrow independent content"),
+        (patterns, "Overhearing is lossy"),
+        (cases, "neighbour noise"),
+        (cases, "information carrier fails"),
+    )
+    for body, phrase in checks:
+        if phrase not in body:
+            errors.append(f"missing strategy behaviour guard: {phrase}")
+    for path in skill.rglob("*"):
+        if path.is_file() and path.suffix in {".md", ".py", ".yaml", ".yml"}:
+            body = path.read_text(encoding="utf-8")
+            for term in FORBIDDEN_INTERNAL:
+                if term in body:
+                    errors.append(
+                        f"internal dependency remains in {path.relative_to(skill)}"
+                    )
+    return errors
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -143,15 +193,14 @@ def main() -> int:
     args = parser.parse_args()
     skill = args.skill_path.expanduser().resolve()
     errors = verify(skill)
+    errors.extend(verify_strategy(skill.parent / "reality-strategy"))
     if errors:
         for error in errors:
             print(f"FAIL {error}", file=sys.stderr)
         return 1
-    print("PASS skill_files")
-    print("PASS local_references")
-    print("PASS standalone_boundary")
-    print("PASS record_validator")
-    print("PASS reality-grounding verification complete")
+    print("PASS reality-grounding files and record validator")
+    print("PASS reality-strategy files and behaviour guards")
+    print("PASS paired reality Skills verification complete")
     return 0
 
 

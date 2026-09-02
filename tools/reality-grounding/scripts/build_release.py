@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build a deterministic public ZIP for the standalone Skill."""
+"""Build a deterministic public ZIP for the paired reality Skills."""
 
 from __future__ import annotations
 
@@ -10,7 +10,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 DIST = ROOT / "dist"
-VERSION = "0.2.0"
+VERSION = "0.4.0"
 FILES = (
     "README.md",
     "QUICKSTART.md",
@@ -26,19 +26,24 @@ FILES = (
     "reality-grounding/references/evaluation-cases.md",
     "reality-grounding/references/reality-record-contract.md",
     "reality-grounding/scripts/validate_reality_record.py",
+    "reality-strategy/SKILL.md",
+    "reality-strategy/agents/openai.yaml",
+    "reality-strategy/references/evaluation-cases.md",
+    "reality-strategy/references/strategy-case-contract.md",
+    "reality-strategy/references/streetwise-patterns.md",
 )
 
 
 def main() -> int:
     DIST.mkdir(exist_ok=True)
-    output = DIST / f"bonobox-reality-grounding-v{VERSION}.zip"
+    output = DIST / f"bonobox-reality-skills-v{VERSION}.zip"
     with zipfile.ZipFile(output, "w", compression=zipfile.ZIP_DEFLATED) as archive:
         for relative in FILES:
             path = ROOT / relative
             if not path.is_file():
                 raise FileNotFoundError(relative)
-            info = zipfile.ZipInfo(f"reality-grounding-v{VERSION}/{relative}")
-            info.date_time = (2026, 9, 1, 0, 0, 0)
+            info = zipfile.ZipInfo(f"reality-skills-v{VERSION}/{relative}")
+            info.date_time = (2026, 9, 2, 0, 0, 0)
             info.external_attr = 0o644 << 16
             archive.writestr(info, path.read_bytes(), compress_type=zipfile.ZIP_DEFLATED)
     digest = hashlib.sha256(output.read_bytes()).hexdigest()

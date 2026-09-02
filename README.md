@@ -30,7 +30,7 @@
 | [Portable Search MCP](tools/portable-search-mcp/) | 给支持 MCP 的本地模型、Agent、IDE 和自动化流程增加公开网页、新闻和图片搜索 | 90/90 请求成功；网页/图片 66/66、新闻 24/24 轮有结果；P50 2.537 秒 | v2.1.0 · 已发布 |
 | [Superset 只读查询 Skill](tools/superset-query/) | 让 Agent 通过用户已有的 Superset SQL Lab 通道执行有边界的 SELECT 查询，并汇集跨公司的脱敏兼容性反馈 | 自动测试覆盖写入拦截、结果上限、CSV 安全、会话身份、错误分类和公开兼容性报告；旧版同步 SQL Lab 路线有维护者私下验证 | v1.0.0-beta.2 · 公开 Beta |
 | [Wiki Connector](tools/wiki-connector/) | 让 Agent 通过用户自己的 Wiki 权限搜索和读取资料，并自动生成脱敏诊断反馈 | 离线测试覆盖 URL、安全边界、诊断报告和错误脱敏；真实环境仍需由使用者运行 `doctor` 验证 | v0.1.0-beta.1 · 公开 Beta |
-| [丢掉幻想：Reality Grounding Skill](tools/reality-grounding/) | 让 Agent 在建议、规划和系统设计前，先检查真实权限、实际做法、参与者行为和会改变行动的未知信息 | 安装、自检和结构验证通过本地测试；包含六类行为验收案例，具体模型和宿主仍需确认实际触发 | v0.2.0 · 公开 Beta |
+| [丢掉幻想：Reality Grounding + Reality Strategy](tools/reality-grounding/) | 让 Agent 先问清现实，再利用现场已有的人、关系、场景和条件找到可执行的路径 | 成对安装、自检和结构验证通过本地测试；包含九类调查案例和八类策略案例，具体模型和宿主仍需确认实际触发 | v0.4.0 · 公开候选 |
 
 ## 第一件工具：Portable Search MCP
 
@@ -116,7 +116,7 @@ PASS live_search valid_results=...
 
 `reality-grounding` 处理一种常见的 AI 失真：它看见组织架构和正式制度，就默认相关关系会真实运行；它也容易假设用户拥有权限、其他人愿意配合、现有材料不存在冲突。
 
-这个 Skill 要求 Agent 先锁定用户真正要做的决定，再查看已经提供或授权的证据，区分事实、制度、实际做法、推断和未知。只有某个问题的不同答案会改变下一步时，它才应该回来问用户。完整安装提示词、自检方法、案例和能力边界见[工具文档](tools/reality-grounding/)。
+`reality-strategy` 接着处理“知道现实以后究竟怎么做”：先找出卡住的那一步，再盘点现场已有的人、关系、场景、内容载体、默认动作和环境条件，设计一个可逆的第一步，并根据真实反应继续调整。两个 Skill 的安装提示词、自检方法、案例和能力边界见[工具文档](tools/reality-grounding/)。
 
 ## 更新与反馈
 
@@ -124,7 +124,7 @@ PASS live_search valid_results=...
 - 新工具和改进建议：[Tool idea](https://github.com/Bono12138/bonobox/issues/new?template=tool_idea.yml)
 - 数据平台成功、失败、兼容性和连接器需求：[Compatibility report](https://github.com/Bono12138/bonobox/issues/new?template=data_platform_compatibility.yml)
 - Wiki 安装成功、失败、适配结果和需求：[Wiki Connector report](https://github.com/Bono12138/bonobox/issues/new?template=wiki_connector_compatibility.yml)
-- Reality Grounding 安装、触发和回答行为：[Reality Grounding report](https://github.com/Bono12138/bonobox/issues/new?template=reality_grounding_feedback.yml)
+- Reality Grounding / Reality Strategy 安装、触发和回答行为：[Reality Skills report](https://github.com/Bono12138/bonobox/issues/new?template=reality_grounding_feedback.yml)
 - 一般讨论和使用分享：[Discussions](https://github.com/Bono12138/bonobox/discussions)
 - 安全问题：不要创建公开 Issue，请按 [SECURITY.md](SECURITY.md) 私下报告
 

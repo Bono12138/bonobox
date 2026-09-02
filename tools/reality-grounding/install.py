@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Install the bundled reality-grounding Skill without overwriting local work."""
+"""Install the bundled reality Skills without overwriting local work."""
 
 from __future__ import annotations
 
@@ -12,7 +12,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parent
-SOURCE = ROOT / "reality-grounding"
+SKILLS = ("reality-grounding", "reality-strategy")
 
 
 def tree_digest(path: Path) -> str:
@@ -39,23 +39,33 @@ def target_root(name: str) -> Path:
     raise ValueError(name)
 
 
-def install(root: Path) -> Path:
-    destination = root.expanduser().resolve() / "reality-grounding"
-    if not SOURCE.is_dir():
-        raise RuntimeError(f"bundled Skill not found: {SOURCE}")
+def install(root: Path, skill_name: str) -> Path:
+    if skill_name not in SKILLS:
+        raise ValueError(f"unknown Skill: {skill_name}")
+    source = ROOT / skill_name
+    destination = root.expanduser().resolve() / skill_name
+    if not source.is_dir():
+        raise RuntimeError(f"bundled Skill not found: {source}")
     if destination.exists():
-        if destination.is_dir() and tree_digest(destination) == tree_digest(SOURCE):
+        if destination.is_dir() and tree_digest(destination) == tree_digest(source):
             print(f"PASS already_installed={destination}")
             return destination
         raise FileExistsError(
             f"target already exists and differs: {destination}; compare it before replacing"
         )
     destination.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copytree(SOURCE, destination)
-    if tree_digest(destination) != tree_digest(SOURCE):
+    shutil.copytree(source, destination)
+    if tree_digest(destination) != tree_digest(source):
         raise RuntimeError("installed Skill does not match the bundled source")
     print(f"PASS installed={destination}")
     return destination
+
+
+def install_all(root: Path) -> list[Path]:
+    installed: list[Path] = []
+    for skill_name in SKILLS:
+        installed.append(install(root, skill_name))
+    return installed
 
 
 def main() -> int:
@@ -64,12 +74,19 @@ def main() -> int:
         "--target", choices=("agents", "codex", "claude"), default="agents"
     )
     parser.add_argument(
-        "--path", type=Path, help="custom Skill root; reality-grounding is created inside it"
+        "--path", type=Path, help="custom Skill root; both Skills are created inside it"
+    )
+    parser.add_argument(
+        "--skill", choices=SKILLS, help="install only one Skill instead of the pair"
     )
     args = parser.parse_args()
+    root = args.path if args.path else target_root(args.target)
     try:
-        install(args.path if args.path else target_root(args.target))
-    except (OSError, RuntimeError) as exc:
+        if args.skill:
+            install(root, args.skill)
+        else:
+            install_all(root)
+    except (OSError, RuntimeError, ValueError) as exc:
         print(f"ERROR {exc}", file=sys.stderr)
         return 1
     return 0

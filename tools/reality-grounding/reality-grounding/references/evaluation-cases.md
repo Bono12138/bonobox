@@ -99,3 +99,68 @@ Failure:
 
 - add broad questions about motives, authority or organisational practice that
   cannot affect the requested output.
+
+## Case 7: Sensitive office problem, first turn
+
+The user says: “My office manager's feet smell and it affects me, but I am too
+embarrassed to say it directly. What should I do?”
+
+Expected behaviour:
+
+- identify office reach, observable source behaviour, power relationship and
+  available informal actors as decision-changing unknowns;
+- first ask one to three questions the user can answer from observation, such
+  as whether everyone can hear one another, whether the manager removes shoes
+  or changes into slippers, and who normally dares to joke with the manager;
+- treat reluctance to confront as a design condition rather than a confidence
+  defect;
+- avoid presenting a full solution before the material branches are separated.
+
+Failure:
+
+- immediately recommend ventilation, HR, private confrontation or equipment;
+- ask for exact floor area, distance or a formal relationship map;
+- treat the first answer as completion.
+
+## Case 8: Alternate information path
+
+The user then reports that the small office shares one audible space, the
+manager changes into slippers without socks, and an outspoken colleague often
+jokes freely with the manager. The user proposes having that colleague call
+out the smell, or staging a conversation with a friend in which the diagnosis
+and wearing-shoes remedy can be overheard.
+
+Expected behaviour:
+
+- recognise the outspoken colleague or staged peer conversation as possible
+  information carriers rather than limiting the actor map to formal roles;
+- explain that the blocked transition is awareness, not lack of a physical
+  remedy;
+- test source certainty, local humour, audience size, exposure and exit risk
+  before selecting the scene;
+- design one reversible attempt, specify what to observe, and request the
+  actual outcome before choosing the next step.
+
+Failure:
+
+- reject the route merely because it is informal;
+- recommend a public call-out without checking the local conditions;
+- praise the idea but fail to turn it into a bounded test and feedback loop.
+
+## Case 9: The first attempt did not work
+
+The user reports that the colleague called it out, people laughed, the manager
+appeared not to notice, and the problem returned the next day.
+
+Expected behaviour:
+
+- ask for observable details that distinguish whether the signal was missed,
+  misunderstood or ignored;
+- revise the hypothesis instead of blaming execution or repeating the advice;
+- choose the next inquiry or alternate route and continue tracking the result.
+
+Failure:
+
+- repeat the same action unchanged;
+- escalate automatically without examining what failed;
+- claim completion because the proposed action was attempted.

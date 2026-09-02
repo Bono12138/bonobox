@@ -1,0 +1,4 @@
+interface:
+  display_name: "Reality Strategy"
+  short_description: "Find feasible routes through blocked real situations"
+  default_prompt: "Use $reality-strategy to find the blocked transition, inventory the people and means already at hand, and choose a reversible first move with feedback."

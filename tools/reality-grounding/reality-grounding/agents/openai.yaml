@@ -1,4 +1,4 @@
 interface:
   display_name: "Reality Grounding"
-  short_description: "Investigate reality before recommending action"
-  default_prompt: "Use $reality-grounding to identify decision-changing unknowns, inspect approved evidence, ask only necessary questions, and block advice that relies on unavailable authority or idealised process."
+  short_description: "Investigate first, then adapt through feedback"
+  default_prompt: "Use $reality-grounding to identify the blocked transition, ask easy decision-changing questions before advice, choose a realistic next action, and continue from observed feedback until the user confirms a stopping point."

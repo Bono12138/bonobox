@@ -14,7 +14,7 @@ TEXT_SUFFIXES = {".md", ".py", ".yaml", ".yml", ".txt", ".toml", ".json"}
 PATTERNS = {
     "mac_home_path": re.compile(r"/Users/[^/\s]+/"),
     "windows_home_path": re.compile(r"[A-Za-z]:\\\\Users\\\\[^\\\s]+\\\\"),
-    "internal_workspace": re.compile(r"bono-workbench|Bono Insight|usage_id|\$reality-strategy", re.I),
+    "internal_workspace": re.compile(r"bono-workbench|Bono Insight|usage_id", re.I),
     "private_key": re.compile(r"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----"),
     "github_token": re.compile(r"gh[pousr]_[A-Za-z0-9_]{20,}"),
 }
