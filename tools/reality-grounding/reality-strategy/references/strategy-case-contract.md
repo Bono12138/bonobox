@@ -6,10 +6,10 @@ Keep this internal decision record separate from the evidence that supports it. 
 
 - desired end condition and unacceptable downside;
 - original result versus the proposed method currently under discussion;
-- material participants, locations, goods or rights flow, money or benefit
-  flow, contract and authority links, and sequence;
-- transaction value, existing funds, payment due and financing gap kept
-  distinct when relevant;
+- material participants, locations, object or resource flow, responsibility
+  and authority links, and sequence;
+- stated scale, resources already available, resources still required and the
+  desired end state kept distinct when relevant;
 - grounded facts, named assumptions and unanswered questions;
 - material stakeholders and their actual roles in this result;
 - observed behaviour, confirmed judgments, inferences, hypotheses and unknowns kept separate;

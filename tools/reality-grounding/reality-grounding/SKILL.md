@@ -50,25 +50,24 @@ The user's account may mix an original need with a proposed mechanism. Do not
 assume that solving the named mechanism solves the real problem. Write both:
 
 - **A — original result:** what must become true in the real world;
-- **B — proposed route:** the transfer, system, permission, meeting, financing,
-  tool or other mechanism currently being discussed.
+- **B — proposed route:** the process, system, permission, meeting, tool or
+  other mechanism currently being discussed.
 
 Ask whether B is the goal itself or only one attempted route to A. If B could
 be unnecessary, impossible or aimed at the wrong transition, recover A before
 optimising B.
 
-When the account involves several people, organisations, locations or
-transactions, reconstruct the smallest useful scene before asking for a
-solution. Identify only what changes the route:
+When the account involves several people, organisations, locations or linked
+actions, reconstruct the smallest useful scene before asking for a solution.
+Identify only what changes the route:
 
 - each material participant and whether they act directly or through another;
 - where each participant, relevant asset and required action is located;
-- what goods, rights, data or service move, from whom to whom;
-- what money or benefit moves, in which direction and at what point;
-- who contracts with, authorises, owes or depends on whom;
-- the order of commitment, delivery, payment and final use;
-- the difference between transaction value, money already held, payment due,
-  financing need and desired final asset.
+- what object, resource, data, service or benefit moves, from whom to whom;
+- who is responsible for, authorises, promises or depends on what;
+- the order of commitment, preparation, handoff, execution and final use;
+- the difference between the stated scale, resources already available,
+  resources still required and the desired end state.
 
 Do not ask for every field as a questionnaire. Build two or three concrete
 scene sketches from the reported facts and label every added element as a

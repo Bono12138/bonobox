@@ -88,9 +88,9 @@ Each sketch should show:
 - who is involved and whether each person or organisation is on one side,
   another side or only an intermediary;
 - where each participant and relevant asset is located;
-- which way the goods, rights, data or service move;
-- which way money moves and when;
-- who signs, authorises or owes what to whom;
+- which way the object, resource, data, service or benefit moves;
+- who is responsible for, authorises or promises what;
+- which commitments and actions happen first;
 - what exists now, what is only planned, and what final result is wanted.
 
 Keep invented links visibly hypothetical. Present the few sketches in plain

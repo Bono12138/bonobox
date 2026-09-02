@@ -19,7 +19,6 @@ FILES = (
     "install.py",
     "verify.py",
     "docs/TEST-REPORT.md",
-    "docs/evaluations/20260902-v0.5.0-blind-tests.md",
     "docs/reality-grounding-share-card.png",
     "reality-grounding/SKILL.md",
     "reality-grounding/agents/openai.yaml",

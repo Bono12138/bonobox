@@ -112,7 +112,7 @@ class RealityGroundingPublicTests(unittest.TestCase):
         self.assertIn("Find the blocked transition", skill)
         self.assertIn("Giving advice is not completion", skill)
         self.assertIn("A — original result", skill)
-        self.assertIn("transaction value, money already held", skill)
+        self.assertIn("stated scale, resources already available", skill)
         self.assertIn("outspoken people", inquiry)
         self.assertIn("My office manager's feet smell", cases)
         self.assertIn("staged peer conversation", cases)
@@ -137,9 +137,10 @@ class RealityGroundingPublicTests(unittest.TestCase):
         self.assertIn("If the other actor does nothing", skill)
         self.assertIn("Borrow independent content", patterns)
         self.assertIn("Overhearing is lossy", patterns)
-        self.assertIn("RS-09: the confused distribution deal", cases)
-        self.assertIn("reconstruct parties, locations", cases)
-        self.assertIn("timing flows", cases)
+        self.assertIn("RS-09: the confused training relocation", cases)
+        self.assertIn("reconstruct participants, locations, resources", cases)
+        self.assertIn("published plan from the actual", cases)
+        self.assertIn("missing condition", cases)
 
 
 if __name__ == "__main__":

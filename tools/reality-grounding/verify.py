@@ -174,9 +174,10 @@ def verify_strategy(skill: Path) -> list[str]:
         (text, "If the other actor does nothing"),
         (patterns, "Borrow independent content"),
         (patterns, "Overhearing is lossy"),
-        (cases, "RS-09: the confused distribution deal"),
-        (cases, "reconstruct parties, locations"),
-        (cases, "timing flows"),
+        (cases, "RS-09: the confused training relocation"),
+        (cases, "reconstruct participants, locations, resources"),
+        (cases, "published plan from the actual"),
+        (cases, "missing condition"),
     )
     for body, phrase in checks:
         if phrase not in body:
