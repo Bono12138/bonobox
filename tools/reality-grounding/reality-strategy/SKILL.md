@@ -56,13 +56,13 @@ changed. When the account mixes an original need with a proposed method, write
 the original result as A and the proposed method as B. Do not optimise B until
 there is evidence that B is necessary for A.
 
-For a multi-party or transactional scene, use `$reality-grounding` to recover
-the material participants, their locations, goods or rights flow, money or
-benefit flow, contract and authority links, and the sequence of commitment,
-delivery and payment. Distinguish deal value, existing funds, payment due,
-financing gap and desired final asset. If these lead to materially different
-strategies, present two or three concrete hypothetical scene sketches and ask
-for the smallest correction instead of sending a questionnaire.
+For a multi-party or linked-action scene, use `$reality-grounding` to recover
+the material participants, their locations, the object or resource involved,
+responsibility and authority links, and the sequence of commitments, handoffs
+and execution. Distinguish the stated scale, resources already available,
+resources still required and the desired end state. If these lead to materially
+different strategies, present two or three concrete hypothetical scene
+sketches and ask for the smallest correction instead of sending a questionnaire.
 
 ## Mandatory diagnosis gate
 
@@ -70,7 +70,7 @@ Do not start with a solution template. First determine whether the cause is know
 
 Establish five things:
 
-1. **Actual object and relationship chain:** what result is required, what is only a proposed method, which participants and locations matter, and how the relevant goods, rights, money, contracts, authority and timing actually connect.
+1. **Actual object and relationship chain:** what result is required, what is only a proposed method, which participants and locations matter, and how the relevant object, resources, responsibilities, authority, commitments and timing actually connect.
 2. **Actual decision chain:** in the latest comparable event, who proposed the action, who made the practical decision, who could quietly stop or redirect it, what each person actually said or did, and who absorbed the result.
 3. **Stated explanation versus sustaining mechanism:** treat “reliable”, “urgent”, “the client is important”, “the boss may need it” and similar statements as reported explanations. They do not yet prove why the arrangement persists. Find what the relevant actor protects, gains, avoids, fears, cannot do or does not want to spend effort on.
 4. **Competing explanations:** when materially different causes remain possible, generate at least two live hypotheses privately. Consider an operational constraint, fear of blame or inconvenience, a relationship or status concern, a gatekeeper's self-protection, and a personal benefit when the scene supports those possibilities. These are questions to test, never facts to announce or accusations to imply.

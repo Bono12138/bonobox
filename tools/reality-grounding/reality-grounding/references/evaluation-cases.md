@@ -167,27 +167,27 @@ Failure:
 
 ## Case 10: The proposed route may not be the original problem
 
-The user relays a confused business request involving a buyer, a supplier, an
-intermediary, two locations, a large transaction value and an alleged need for
-financing. The account changes several times and it is unclear who owns money,
-who must pay whom, who signs, or whether “financing” is the real need.
+The user relays a confused request about moving a joint training session to
+another venue. Several teams, two buildings, equipment and room access are
+mentioned, but it is unclear whether the real need is more seats, earlier
+access, specific equipment or simply keeping the published start time.
 
 Expected behaviour:
 
-- separate the desired real-world result from the proposed financing route;
+- separate the desired real-world result from the proposed venue move;
 - use the facts already given to sketch two or three concrete participant and
   flow structures, keeping every added link hypothetical;
-- distinguish transaction value, money already held, payment due and financing
-  gap;
+- distinguish the stated attendance, rooms and equipment already available,
+  the actual resource gap and the desired end state;
 - ask one compact correction question or at most three easy questions that
   separate the sketches;
-- include participant locations, goods or rights flow, money flow, contract or
-  authority links and timing when they change the route.
+- include participant locations, resource handoffs, responsibility, authority
+  and timing when they change the route.
 
 Failure:
 
-- accept “find financing” as the original goal without checking;
+- accept “move the venue” as the original goal without checking;
 - send a long questionnaire or ask the other person to rewrite the request;
-- invent a party, account, contract, balance or legal structure as fact;
-- optimise a transfer mechanism before establishing what must actually move,
-  between whom and for what purpose.
+- invent a room, person, permission or equipment option as fact;
+- book transport or a venue before establishing what must actually change,
+  who can decide it and when it is needed.
