@@ -78,6 +78,26 @@ conditions into ordinary observations:
 If the user cannot answer, change the source, use a visible proxy, or design a
 small reversible observation. Do not repeat the same abstract question.
 
+### Reconstruct a confused multi-party scene with low burden
+
+When somebody mixes the goal, proposed method, participants and sequence, do
+not send a long list of sensitive or technical questions. First extract the
+facts already stated, then privately sketch two or three plausible structures.
+Each sketch should show:
+
+- who is involved and whether each person or organisation is on one side,
+  another side or only an intermediary;
+- where each participant and relevant asset is located;
+- which way the goods, rights, data or service move;
+- which way money moves and when;
+- who signs, authorises or owes what to whom;
+- what exists now, what is only planned, and what final result is wanted.
+
+Keep invented links visibly hypothetical. Present the few sketches in plain
+language and ask which is closest, followed by at most one decisive correction.
+This is often more answerable than asking six separate questions. Never ask the
+other person to reorganise the whole story or “send the correct version”.
+
 ## 5. Search for alternate paths through the situation
 
 When the obvious action is socially, politically or practically blocked,

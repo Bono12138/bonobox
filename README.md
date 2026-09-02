@@ -30,7 +30,7 @@
 | [Portable Search MCP](tools/portable-search-mcp/) | 给支持 MCP 的本地模型、Agent、IDE 和自动化流程增加公开网页、新闻和图片搜索 | 90/90 请求成功；网页/图片 66/66、新闻 24/24 轮有结果；P50 2.537 秒 | v2.1.0 · 已发布 |
 | [Superset 只读查询 Skill](tools/superset-query/) | 让 Agent 通过用户已有的 Superset SQL Lab 通道执行有边界的 SELECT 查询，并汇集跨公司的脱敏兼容性反馈 | 自动测试覆盖写入拦截、结果上限、CSV 安全、会话身份、错误分类和公开兼容性报告；旧版同步 SQL Lab 路线有维护者私下验证 | v1.0.0-beta.2 · 公开 Beta |
 | [Wiki Connector](tools/wiki-connector/) | 让 Agent 通过用户自己的 Wiki 权限搜索和读取资料，并自动生成脱敏诊断反馈 | 离线测试覆盖 URL、安全边界、诊断报告和错误脱敏；真实环境仍需由使用者运行 `doctor` 验证 | v0.1.0-beta.1 · 公开 Beta |
-| [丢掉幻想：Reality Grounding + Reality Strategy](tools/reality-grounding/) | 让 Agent 先问清现实，再利用现场已有的人、关系、场景和条件找到可执行的路径 | 成对安装、自检和结构验证通过本地测试；包含九类调查案例和八类策略案例，具体模型和宿主仍需确认实际触发 | v0.4.0 · 公开候选 |
+| [丢掉幻想：Reality Grounding + Reality Strategy](tools/reality-grounding/) | 让 Agent 找回原始问题、还原真实关系，再查明阻碍并设计能改变局势的行动 | 成对安装、自检和结构验证通过本地测试；包含十类调查案例和九类策略案例，具体模型和宿主仍需确认实际触发 | v0.5.0 · 公开候选 |
 
 ## 第一件工具：Portable Search MCP
 
@@ -114,9 +114,9 @@ PASS live_search valid_results=...
 
 ## 第四件工具：丢掉幻想
 
-`reality-grounding` 处理一种常见的 AI 失真：它看见组织架构和正式制度，就默认相关关系会真实运行；它也容易假设用户拥有权限、其他人愿意配合、现有材料不存在冲突。
+`reality-grounding` 先区分真正要实现的结果和已经被提出来的办法。遇到多人、多地或交易叙述混乱时，它会还原参与方、所在地、钱、货、合同和时间顺序，只问真正会改变路线的问题。
 
-`reality-strategy` 接着处理“知道现实以后究竟怎么做”：先找出卡住的那一步，再盘点现场已有的人、关系、场景、内容载体、默认动作和环境条件，设计一个可逆的第一步，并根据真实反应继续调整。两个 Skill 的安装提示词、自检方法、案例和能力边界见[工具文档](tools/reality-grounding/)。
+`reality-strategy` 接着查清公开说法背后的真实阻碍和实际决策链，再改变默认动作、责任、代价、支持者或行动顺序。它负责把可行性、成本、暴露面和后果说清，目标与价值判断仍由用户决定。两个 Skill 的安装提示词、自检方法、案例和能力边界见[工具文档](tools/reality-grounding/)。
 
 ## 更新与反馈
 

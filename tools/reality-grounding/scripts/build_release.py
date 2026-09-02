@@ -10,7 +10,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 DIST = ROOT / "dist"
-VERSION = "0.4.0"
+VERSION = "0.5.0"
 FILES = (
     "README.md",
     "QUICKSTART.md",
@@ -19,6 +19,7 @@ FILES = (
     "install.py",
     "verify.py",
     "docs/TEST-REPORT.md",
+    "docs/evaluations/20260902-v0.5.0-blind-tests.md",
     "docs/reality-grounding-share-card.png",
     "reality-grounding/SKILL.md",
     "reality-grounding/agents/openai.yaml",
@@ -29,6 +30,9 @@ FILES = (
     "reality-strategy/SKILL.md",
     "reality-strategy/agents/openai.yaml",
     "reality-strategy/references/evaluation-cases.md",
+    "reality-strategy/references/political-strategy-patterns.md",
+    "reality-strategy/references/power-shifting-moves.md",
+    "reality-strategy/references/stakeholder-map.md",
     "reality-strategy/references/strategy-case-contract.md",
     "reality-strategy/references/streetwise-patterns.md",
 )

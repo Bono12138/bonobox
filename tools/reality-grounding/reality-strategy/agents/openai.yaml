@@ -1,4 +1,4 @@
 interface:
-  display_name: "Reality Strategy"
-  short_description: "Find feasible routes through blocked real situations"
-  default_prompt: "Use $reality-strategy to find the blocked transition, inventory the people and means already at hand, and choose a reversible first move with feedback."
+  display_name: "丢掉幻想，准备斗争"
+  short_description: "先查明原始问题、真实原因和实际决策链，再设计能改变局势的行动"
+  default_prompt: "Use $reality-strategy to recover the original result, reconstruct the real participant and decision chains, distinguish the stated explanation from the sustaining cause, and design a position-changing move while leaving goals and value judgments with the user."

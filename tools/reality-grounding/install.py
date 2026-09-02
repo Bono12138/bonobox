@@ -39,7 +39,7 @@ def target_root(name: str) -> Path:
     raise ValueError(name)
 
 
-def install(root: Path, skill_name: str) -> Path:
+def installation_paths(root: Path, skill_name: str) -> tuple[Path, Path]:
     if skill_name not in SKILLS:
         raise ValueError(f"unknown Skill: {skill_name}")
     source = ROOT / skill_name
@@ -48,11 +48,18 @@ def install(root: Path, skill_name: str) -> Path:
         raise RuntimeError(f"bundled Skill not found: {source}")
     if destination.exists():
         if destination.is_dir() and tree_digest(destination) == tree_digest(source):
-            print(f"PASS already_installed={destination}")
-            return destination
+            return source, destination
         raise FileExistsError(
             f"target already exists and differs: {destination}; compare it before replacing"
         )
+    return source, destination
+
+
+def install(root: Path, skill_name: str) -> Path:
+    source, destination = installation_paths(root, skill_name)
+    if destination.exists():
+        print(f"PASS already_installed={destination}")
+        return destination
     destination.parent.mkdir(parents=True, exist_ok=True)
     shutil.copytree(source, destination)
     if tree_digest(destination) != tree_digest(source):
@@ -62,6 +69,10 @@ def install(root: Path, skill_name: str) -> Path:
 
 
 def install_all(root: Path) -> list[Path]:
+    # Preflight the whole pair before copying either Skill. A conflict in the
+    # second directory must not leave the user with a mixed partial install.
+    for skill_name in SKILLS:
+        installation_paths(root, skill_name)
     installed: list[Path] = []
     for skill_name in SKILLS:
         installed.append(install(root, skill_name))
