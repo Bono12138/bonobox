@@ -19,7 +19,7 @@ If a tool saves you time, star the repository to follow future releases.
 | [Portable Search MCP](tools/portable-search-mcp/) | Adds public web, news, and image search to MCP-compatible agents and local models | 90/90 requests succeeded; web/image returned results in 66/66 runs and news in 24/24; P50 latency 2.537 s | v2.1.0 · released |
 | [Superset Read-only Query Skill](tools/superset-query/) | Runs bounded SELECT queries through a user's existing Superset SQL Lab path and collects redacted cross-company compatibility reports | Automated tests cover write rejection, result limits, CSV safety, session identity, error classification, and public compatibility reports; the legacy route has private maintainer validation | v1.0.0-beta.2 · public beta |
 | [Wiki Connector](tools/wiki-connector/) | Lets an Agent search and read Confluence with the user's existing access, then create a redacted compatibility report | Offline tests cover URL validation, read-only boundaries, local browser control, diagnostics, and redaction; each real environment must pass `doctor` | v0.1.0-beta.1 · public beta |
-| [Reality Grounding + Reality Strategy](tools/reality-grounding/) | Makes an Agent inspect the real scene, then use people, relationships, timing, content, and conditions already at hand to find an executable route | Paired installation and structural checks pass locally; nine grounding and eight strategy cases are included, while each model and host still needs an observed invocation check | v0.4.0 · release candidate |
+| [Reality Grounding + Reality Strategy](tools/reality-grounding/) | Recovers the original problem, reconstructs the real relationship chain, then targets the sustaining obstacle with an executable move | Paired installation and structural checks pass locally; ten grounding and nine strategy cases are included, while each model and host still needs an observed invocation check | v0.5.0 · release candidate |
 
 ## Portable Search MCP
 
@@ -50,7 +50,7 @@ This Windows-first beta gives an Agent read-only Confluence search and page retr
 
 ## Reality Grounding + Reality Strategy
 
-`reality-grounding` addresses a common failure in AI advice: treating an organisation chart, formal policy, assumed access, and willing cooperation as if they described actual execution. `reality-strategy` continues from that grounded scene: it finds the blocked transition, inventories people, relationships, timing, content, defaults, and environmental levers already at hand, then chooses a reversible first move and follows the real response. See the [tool documentation](tools/reality-grounding/) for paired installation, verification, examples, and limits.
+`reality-grounding` separates the original result from a proposed method, then reconstructs participants, locations, goods or rights, money, contracts and timing with a few answerable questions. `reality-strategy` distinguishes public explanations from the mechanism that sustains the situation, then changes defaults, burdens, costs, support or decision sequence. It reports feasibility, exposure and consequences while leaving goals and value judgments with the user. See the [tool documentation](tools/reality-grounding/) for paired installation, verification, examples, and limits.
 
 Use [Issues](https://github.com/Bono12138/bonobox/issues) for reproducible problems and tool ideas, [Discussions](https://github.com/Bono12138/bonobox/discussions) for general questions, and [SECURITY.md](SECURITY.md) for private security reports.
 

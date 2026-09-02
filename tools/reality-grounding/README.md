@@ -4,7 +4,7 @@
 
 很多 AI 建议每句话都正确，放进真实公司却一步也走不动。它会默认经理愿意授权、其他部门愿意配合、制度写了就会执行，也容易把自己猜出来的条件当成已经存在。
 
-这是一对配合使用的 Skill。`reality-grounding` 先找到真正会改变行动的未知信息：实际权限、谁能批准或拖住、正式制度与日常做法的差异、已有证据、失败和接管条件。`reality-strategy` 再找出真正卡住的一步，盘点现场已有的人、关系、场景、内容、默认动作和环境条件，设计一条可执行、可撤回、能观察结果的路径。第一次行动以后继续收集反馈，不把“给过建议”当成“问题已经解决”。
+这是一对配合使用的 Skill。`reality-grounding` 先区分“真正要实现的结果”和“别人已经提出来的办法”，再用尽量少的问题还原参与方、所在地、货物或权利、资金、合同与时间顺序。`reality-strategy` 接着查清公开说法背后的真实阻碍和实际决策链，改变默认动作、责任、代价、支持者或行动顺序。第一次行动以后继续收集反馈，不把“给过建议”当成“问题已经解决”。
 
 ## 直接交给 Agent
 
@@ -16,10 +16,9 @@ https://github.com/Bono12138/bonobox/tree/main/tools/reality-grounding
 
 请先检查你当前是否支持 Agent Skills，再把 reality-grounding 和 reality-strategy 安装到当前 Agent 实际使用的 Skill 目录。不要覆盖同名 Skill；如果已经存在，请先比较差异并告诉我。
 
-安装后运行：
-python verify.py --skill-path <实际安装后的 reality-grounding 目录>
+先检测可用的 Python 3 命令：Windows 通常使用 `py -3`，macOS 和 Linux 通常使用 `python3`。安装后用该命令运行 verify.py，并传入实际安装后的 reality-grounding 目录。
 
-验证通过后，请明确告诉我：两个 Skill 分别安装到了哪里；当前 Agent 是否都能发现；验证器是否 PASS。然后先用 $reality-grounding 问清会改变路线的现场信息，再用 $reality-strategy 找出卡住的一步，盘点手边的人、关系、场景、内容和环境条件，提出一个可逆的第一步。实施后继续问我实际结果，根据反馈调整下一步。
+验证通过后，请明确告诉我：两个 Skill 分别安装到了哪里；当前 Agent 是否都能发现；验证器是否 PASS。然后先用 $reality-grounding 区分原始诉求和当前办法；叙述混乱时，先给我两三种参与方与钱、货、合同流的情境让我确认，只问会改变路线的问题。再用 $reality-strategy 查明真实阻碍和决策链，提出一个能改变局势的第一步。实施后继续问我实际结果，根据反馈调整下一步。
 
 不要让我在聊天中发送密码、Token、Cookie、公司内部资料或客户数据，也不要绕过现有安全设置。
 ```
@@ -30,28 +29,30 @@ python verify.py --skill-path <实际安装后的 reality-grounding 目录>
 
 需要 Python 3.9+。以下命令都在本目录运行。
 
+macOS 和 Linux：
+
 安装到通用 Agent Skills：
 
 ```bash
-python install.py --target agents
+python3 install.py --target agents
 ```
 
 安装到 Codex：
 
 ```bash
-python install.py --target codex
+python3 install.py --target codex
 ```
 
 安装到 Claude Code：
 
 ```bash
-python install.py --target claude
+python3 install.py --target claude
 ```
 
 安装到指定 Skill 根目录：
 
 ```bash
-python install.py --path /path/to/skills
+python3 install.py --path /path/to/skills
 ```
 
 安装器默认安装两个 Skill，不会覆盖已有的同名目录。目标已经存在但内容不同时，它会停止，让你先检查差异。只想安装其中一个时，可以加 `--skill reality-grounding` 或 `--skill reality-strategy`。
@@ -59,7 +60,7 @@ python install.py --path /path/to/skills
 安装完成后运行：
 
 ```bash
-python verify.py --skill-path /实际路径/reality-grounding
+python3 verify.py --skill-path /实际路径/reality-grounding
 ```
 
 看到以下输出，才能确认文件、引用和结构验证器已经安装完整：
@@ -70,13 +71,15 @@ PASS reality-strategy files and behaviour guards
 PASS paired reality Skills verification complete
 ```
 
+Windows 中把以上命令开头的 `python3` 换成 `py -3`。
+
 ## 它会怎样改变回答
 
 普通建议可能直接说：
 
 > 请经理发一封正式授权邮件，明确各部门职责，并建立固定周会。
 
-安装后，Agent 应先区分几种情况：用户缺少的是正式决策权、一次读取资料的权限，还是其他人的实际配合；过去类似事情怎样推进；谁能批准，谁可以一直拖着不处理；有没有不影响现有工作的可逆测试。直接路线走不通时，它还应主动寻找谁说同一句话更自然、什么现成内容可以传递信息、哪个日常场景可以承载动作，以及怎样让对方不必当场认错也能调整。没有查清的条件会保留为未知。
+安装后，Agent 应先判断用户说的“做 B”究竟是原始目标，还是解决 A 的一种猜想。多人、多地或交易叙述混乱时，它会先画出少数几种具体关系，请用户做最小纠正，而不是扔回一份长问卷。关系清楚后，它再查真正掌握决定的人、公开理由背后的持续原因，以及谁在承担沉默和拖延的成本。没有查清的连接仍是明确标注的假设，不会被补成事实。
 
 ## 能力边界
 
@@ -88,7 +91,7 @@ PASS paired reality Skills verification complete
 
 ## 测试和反馈
 
-本项目包含九类现实调查案例、八类现实策略案例和结构验证器。测试方法及当前结果见 [测试报告](docs/TEST-REPORT.md)。
+本项目包含十类现实调查案例、九类现实策略案例和结构验证器。测试方法及当前结果见 [测试报告](docs/TEST-REPORT.md)。
 
 如果安装成功、触发失败、回答仍然跳过现有证据，或某个 Agent 不支持这种 Skill 结构，请提交 [Reality Grounding 反馈](https://github.com/Bono12138/bonobox/issues/new?template=reality_grounding_feedback.yml)。提交前删除公司名称、人物姓名、内部网址、文件内容、真实任务信息、账号、凭据和本机绝对路径。
 

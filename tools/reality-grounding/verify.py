@@ -25,6 +25,9 @@ STRATEGY_REQUIRED = (
     "SKILL.md",
     "agents/openai.yaml",
     "references/evaluation-cases.md",
+    "references/political-strategy-patterns.md",
+    "references/power-shifting-moves.md",
+    "references/stakeholder-map.md",
     "references/strategy-case-contract.md",
     "references/streetwise-patterns.md",
 )
@@ -162,14 +165,18 @@ def verify_strategy(skill: Path) -> list[str]:
         encoding="utf-8"
     )
     checks = (
-        (text, "Find the transition that is actually blocked"),
-        (text, "Inventory the means already at hand"),
-        (text, "non-obvious but still plausible"),
-        (text, "Giving a clever suggestion is not completion"),
+        (text, "Capability version: `1.2.0`"),
+        (text, "Keep the goal and value judgment with the user"),
+        (text, "Reconstruct the object and relationship chain first"),
+        (text, "Actual object and relationship chain"),
+        (text, "Mandatory diagnosis gate"),
+        (text, "Write the attack-defence conversion"),
+        (text, "If the other actor does nothing"),
         (patterns, "Borrow independent content"),
         (patterns, "Overhearing is lossy"),
-        (cases, "neighbour noise"),
-        (cases, "information carrier fails"),
+        (cases, "RS-09: the confused distribution deal"),
+        (cases, "reconstruct parties, locations"),
+        (cases, "timing flows"),
     )
     for body, phrase in checks:
         if phrase not in body:

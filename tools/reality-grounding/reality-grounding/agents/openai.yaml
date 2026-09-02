@@ -1,4 +1,4 @@
 interface:
   display_name: "Reality Grounding"
-  short_description: "Investigate first, then adapt through feedback"
-  default_prompt: "Use $reality-grounding to identify the blocked transition, ask easy decision-changing questions before advice, choose a realistic next action, and continue from observed feedback until the user confirms a stopping point."
+  short_description: "Recover the real problem, investigate, then adapt"
+  default_prompt: "Use $reality-grounding to separate the original result from a proposed method, reconstruct participants and real-world flows when the account is confused, ask only easy decision-changing questions, and continue from observed feedback until the user confirms a stopping point."

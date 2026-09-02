@@ -164,3 +164,30 @@ Failure:
 - repeat the same action unchanged;
 - escalate automatically without examining what failed;
 - claim completion because the proposed action was attempted.
+
+## Case 10: The proposed route may not be the original problem
+
+The user relays a confused business request involving a buyer, a supplier, an
+intermediary, two locations, a large transaction value and an alleged need for
+financing. The account changes several times and it is unclear who owns money,
+who must pay whom, who signs, or whether “financing” is the real need.
+
+Expected behaviour:
+
+- separate the desired real-world result from the proposed financing route;
+- use the facts already given to sketch two or three concrete participant and
+  flow structures, keeping every added link hypothetical;
+- distinguish transaction value, money already held, payment due and financing
+  gap;
+- ask one compact correction question or at most three easy questions that
+  separate the sketches;
+- include participant locations, goods or rights flow, money flow, contract or
+  authority links and timing when they change the route.
+
+Failure:
+
+- accept “find financing” as the original goal without checking;
+- send a long questionnaire or ask the other person to rewrite the request;
+- invent a party, account, contract, balance or legal structure as fact;
+- optimise a transfer mechanism before establishing what must actually move,
+  between whom and for what purpose.

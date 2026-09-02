@@ -1,6 +1,6 @@
 ---
 name: reality-grounding
-description: Actively discover how a situation really works before advice, planning, or system design. Use when the answer may depend on missing facts, actual permissions, stakeholder behaviour, informal practice, available evidence, or feasibility; inspect approved sources and ask only decision-changing questions instead of guessing or prescribing an ideal process.
+description: Actively discover how a situation really works before advice, planning, or system design. Use when the answer may depend on missing facts, actual permissions, stakeholder behaviour, informal practice, available evidence, or feasibility, or when a confused multi-party account may be describing a proposed method instead of the original result; inspect approved sources, reconstruct real relationships and flows, and ask only decision-changing questions.
 ---
 
 # Reality Grounding
@@ -10,12 +10,12 @@ organisation. This Skill is not a questionnaire and not a one-turn advice
 generator. It owns an active loop of inquiry, action, observed feedback and
 revision until the user confirms a real stopping point.
 
-Standalone version: `0.3.0`.
+Capability version: `0.4.0`.
 
 Read `references/active-inquiry.md` when material facts are missing, the user
 asks for proactive investigation, or the available source should be chosen.
 Read `references/reality-record-contract.md` when the task needs a durable case
-record or will feed a later strategy or execution step. Use
+record or will feed `$reality-strategy`. Use
 `scripts/validate_reality_record.py` before treating a substantial reality
 record as ready for strategy. Use `references/evaluation-cases.md` when testing
 or changing this Skill's routing and inquiry behaviour.
@@ -44,6 +44,38 @@ separate the available routes. If a material unknown changes the actor, first
 step, feasibility or social risk, ask first. A short preview of the branches
 may explain the question; it must not become a premature catalogue of advice.
 
+## Recover the original problem before accepting the proposed method
+
+The user's account may mix an original need with a proposed mechanism. Do not
+assume that solving the named mechanism solves the real problem. Write both:
+
+- **A — original result:** what must become true in the real world;
+- **B — proposed route:** the transfer, system, permission, meeting, financing,
+  tool or other mechanism currently being discussed.
+
+Ask whether B is the goal itself or only one attempted route to A. If B could
+be unnecessary, impossible or aimed at the wrong transition, recover A before
+optimising B.
+
+When the account involves several people, organisations, locations or
+transactions, reconstruct the smallest useful scene before asking for a
+solution. Identify only what changes the route:
+
+- each material participant and whether they act directly or through another;
+- where each participant, relevant asset and required action is located;
+- what goods, rights, data or service move, from whom to whom;
+- what money or benefit moves, in which direction and at what point;
+- who contracts with, authorises, owes or depends on whom;
+- the order of commitment, delivery, payment and final use;
+- the difference between transaction value, money already held, payment due,
+  financing need and desired final asset.
+
+Do not ask for every field as a questionnaire. Build two or three concrete
+scene sketches from the reported facts and label every added element as a
+hypothesis. Ask the user or source to correct the picture with one compact,
+ordinary question. Do not tell another person to “rewrite it correctly” or make
+them perform the analysis.
+
 ## Investigate actively
 
 For every unknown that could change the decision:
@@ -52,8 +84,8 @@ For every unknown that could change the decision:
 2. Look first for evidence that already exists and is authorised: actual task
    files, prior outputs, system records, approved business sources, logs,
    queries, messages supplied by the user, or direct observation.
-3. Use a tool or source the user has authorised to inspect the strongest
-   available evidence. Do not request a new governance document when an existing SQL,
+3. Use the approved atomic capability that can inspect the strongest available
+   source. Do not request a new governance document when an existing SQL,
    report, example, screenshot, run record, or responsible operator can answer
    the question.
 4. If existing evidence cannot answer it, use a small reversible probe or ask
@@ -175,11 +207,3 @@ The grounding pass can end in one of four states:
 Do not mark the record ready while a critical or high-impact gap remains open.
 The output must tell the next method what is known, what remains uncertain,
 what the user can actually do, and which routes have already been ruled out.
-
-## Public-use boundary
-
-The Skill changes the Agent's investigation instructions. It does not grant
-access to files, systems, messages or people. Use only sources and tools already
-authorised for the current task. Do not ask the user to paste credentials,
-private company data or confidential documents into chat merely to complete a
-reality record.
