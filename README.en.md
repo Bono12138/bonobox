@@ -12,6 +12,10 @@
 
 If a tool saves you time, star the repository to follow future releases.
 
+## Episode materials
+
+[Astra: AI infrastructure research](episodes/astra-investment-research-20260905/) — Chinese presentation, workbook, original prompt, and public source index. Research date: September 5, 2026.
+
 ## Tool catalog
 
 | Tool | Problem solved | Measured result | Status |
